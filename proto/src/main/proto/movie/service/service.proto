@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+import "movie/model/request.proto";
+import "movie/model/response.proto";
+import "common/base.proto";
+
+option java_multiple_files = true;
+option java_package = "com.brekhin.movie.grpc.service";
+
+service MovieService {
+    rpc getAllMovies(Empty) returns (gRPCGetAllMoviesResponse);
+
+    rpc addMovie(gRPCAddMovieRequest) returns (gRPCAddMovieResponse);
+
+    rpc getMovie(gRPCGetMovieRequest) returns (gRPCGetMovieResponse);
+
+    rpc removeMovie(gRPCRemoveMovieRequest) returns (Empty);
+}

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+import "movie/model/model.proto";
+
+option java_multiple_files = true;
+option java_package = "com.brekhin.movie.grpc.model";
+
+message gRPCAddMovieRequest {
+    GMovie movie = 1;
+}
+
+message gRPCGetMovieRequest {
+    string movieId = 1;
+}
+
+message gRPCRemoveMovieRequest {
+   string movieId = 1;
+}
+

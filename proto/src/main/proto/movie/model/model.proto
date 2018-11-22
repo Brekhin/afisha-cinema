@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.brekhin.movie.grpc.model";
+
+message GMovie {
+    string uuid = 1;
+    string name = 2;
+    google.protobuf.Timestamp rentalStartDate = 3;
+    google.protobuf.Timestamp rentalEndDate = 4;
+    string genre = 5;
+    int32 duration = 6;
+}
