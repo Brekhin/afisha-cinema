@@ -34,8 +34,9 @@ public class MovieEntity {
         return movieId;
     }
 
-    public void setMovieId(UUID movieId) {
+    public MovieEntity setMovieId(UUID movieId) {
         this.movieId = movieId;
+        return this;
     }
 
     public String getName() {
