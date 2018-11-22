@@ -9,7 +9,7 @@ public interface MovieService {
 
     List<MovieEntity> getAllMovies();
 
-    void addMovie(MovieEntity movieEntity);
+    UUID addMovie(MovieEntity movieEntity);
 
     MovieEntity getMovie(UUID movieId);
 
