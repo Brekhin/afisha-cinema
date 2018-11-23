@@ -6,6 +6,7 @@ import com.brekhin.movie.exception.NotFoundMovieException;
 import com.brekhin.movie.grpc.Empty;
 import com.brekhin.movie.grpc.model.*;
 import com.brekhin.movie.grpc.service.MovieServiceGrpc;
+import com.brekhin.movie.grpc.service.impl.error.ErrorStatus;
 import com.brekhin.movie.service.impl.MovieServiceImpl;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
@@ -13,6 +14,7 @@ import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @GRpcService
@@ -33,34 +35,46 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
                     .build());
             responseObserver.onCompleted();
         } catch (Exception e) {
-            error(responseObserver, e);
+            ErrorStatus.status(responseObserver, e);
         }
     }
 
-    private void error(StreamObserver<gRPCGetAllMoviesResponse> responseObserver, Exception e) {
-        Status status;
-        if (e instanceof IllegalArgumentException) {
-            status = Status.INVALID_ARGUMENT;
-        } else if (e instanceof NotFoundMovieException) {
-            status = Status.NOT_FOUND;
-        } else {
-            status = Status.INTERNAL;
-        }
-    }
 
     @Override
     public void addMovie(gRPCAddMovieRequest request, StreamObserver<gRPCAddMovieResponse> responseObserver) {
-        super.addMovie(request, responseObserver);
+        try {
+            UUID movieUID = movieService.addMovie(ProtoConvertToEntity.convert(request.getMovie()));
+            responseObserver.onNext(gRPCAddMovieResponse.newBuilder()
+                    .setMovieId(movieUID.toString())
+                    .build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            ErrorStatus.status(responseObserver, e);
+        }
     }
 
     @Override
     public void getMovie(gRPCGetMovieRequest request, StreamObserver<gRPCGetMovieResponse> responseObserver) {
-        super.getMovie(request, responseObserver);
+        try {
+            MovieEntity movie = movieService.getMovie(ProtoConvertToEntity.convert(request.getMovieId()));
+            responseObserver.onNext(gRPCGetMovieResponse.newBuilder()
+                    .setMovie(ProtoConvertToEntity.convert(movie))
+                    .build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            ErrorStatus.status(responseObserver, e);
+        }
     }
 
     @Override
     public void removeMovie(gRPCRemoveMovieRequest request, StreamObserver<Empty> responseObserver) {
-        super.removeMovie(request, responseObserver);
+        try {
+            movieService.removeMovie(ProtoConvertToEntity.convert(request.getMovieId()));
+            responseObserver.onNext(Empty.newBuilder().build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            ErrorStatus.status(responseObserver, e);
+        }
     }
 
 
