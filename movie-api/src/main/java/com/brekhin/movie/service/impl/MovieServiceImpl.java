@@ -7,16 +7,22 @@ import com.brekhin.movie.service.MovieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class MovieServiceImpl implements MovieService {
 
     private static Logger LOGGER = LoggerFactory.getLogger(MovieServiceImpl.class);
 
+    private final MovieRepository movieRepository;
+
     @Autowired
-    private MovieRepository movieRepository;
+    public MovieServiceImpl(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
 
     @Override
     public List<MovieEntity> getAllMovies() {

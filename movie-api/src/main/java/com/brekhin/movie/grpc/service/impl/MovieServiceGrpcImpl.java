@@ -7,10 +7,13 @@ import com.brekhin.movie.grpc.Empty;
 import com.brekhin.movie.grpc.model.*;
 import com.brekhin.movie.grpc.service.MovieServiceGrpc;
 import com.brekhin.movie.grpc.service.impl.error.ErrorStatus;
+import com.brekhin.movie.service.MovieService;
 import com.brekhin.movie.service.impl.MovieServiceImpl;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -20,8 +23,15 @@ import java.util.stream.Collectors;
 @GRpcService
 public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase {
 
+    static final Logger log = LoggerFactory.getLogger(MovieServiceGrpcImpl.class);
+
+
+    private final MovieService movieService;
+
     @Autowired
-    private MovieServiceImpl movieService;
+    public MovieServiceGrpcImpl(MovieService movieService) {
+        this.movieService = movieService;
+    }
 
     @Override
     public void getAllMovies(Empty request, StreamObserver<gRPCGetAllMoviesResponse> responseObserver) {
@@ -56,12 +66,17 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
     @Override
     public void getMovie(gRPCGetMovieRequest request, StreamObserver<gRPCGetMovieResponse> responseObserver) {
         try {
+            log.info("ID: {}", request.getMovieId().getUuid());
+            log.info("convert: {}", ProtoConvertToEntity.convert(request.getMovieId()));
             MovieEntity movie = movieService.getMovie(ProtoConvertToEntity.convert(request.getMovieId()));
+            log.info("Entity: {}", movie.toString());
             responseObserver.onNext(gRPCGetMovieResponse.newBuilder()
                     .setMovie(ProtoConvertToEntity.convert(movie))
                     .build());
             responseObserver.onCompleted();
+            log.info("SUCCESSs: getMovie");
         } catch (Exception e) {
+            log.error("ERROR: getMovie");
             ErrorStatus.status(responseObserver, e);
         }
     }
@@ -73,6 +88,7 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
             responseObserver.onNext(Empty.newBuilder().build());
             responseObserver.onCompleted();
         } catch (Exception e) {
+            log.error("ERROR: remove");
             ErrorStatus.status(responseObserver, e);
         }
     }
