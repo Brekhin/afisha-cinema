@@ -23,5 +23,6 @@
 	<modules>
 		<module>proto</module>
 		<module>movie-api</module>
-	</modules>
+        <module>gateway-api</module>
+    </modules>
 </project>
