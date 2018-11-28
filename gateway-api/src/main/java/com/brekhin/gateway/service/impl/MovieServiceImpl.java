@@ -65,7 +65,7 @@ public class MovieServiceImpl implements MovieService {
         return rpcMovieServiceClient.getAllMovies(gRPCGetAllMoviesRequest.newBuilder().build())
                 .getMoviesList()
                     .stream()
-                    .map(t -> MovieConverter.convert(t))
+                    .map(MovieConverter::convert)
                     .collect(Collectors.toList());
     }
 }
