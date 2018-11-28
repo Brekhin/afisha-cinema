@@ -1,0 +1,15 @@
+grpc:
+  port: 6567
+spring:
+  application:
+    name: movie-api
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/movie_api"
+    username: root
+    password: "root"
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true

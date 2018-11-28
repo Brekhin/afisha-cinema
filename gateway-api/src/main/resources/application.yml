@@ -1,0 +1,15 @@
+server:
+  address: 0.0.0.0
+  port: 8090
+  servlet:
+    context-path: /gateway-api
+
+spring:
+  application:
+    name: gateway-api
+
+gateway:
+  grpc.client:
+    MovieServiceGrpc:
+      host: localhost
+      port: 6567

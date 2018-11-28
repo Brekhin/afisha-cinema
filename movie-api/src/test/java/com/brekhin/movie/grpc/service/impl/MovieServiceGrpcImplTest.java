@@ -85,7 +85,7 @@ public class MovieServiceGrpcImplTest {
         verify(observer, times(1)).onNext(captor.capture());
 
         gRPCAddMovieResponse response = captor.getValue();
-        assertEquals(response.getMovieId(), MOVIE_UUID.toString());
+        assertEquals(response.getMovieId(), ProtoConvertToEntity.convert(MOVIE_UUID));
 
     }
 
