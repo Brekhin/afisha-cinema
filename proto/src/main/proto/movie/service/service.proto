@@ -8,7 +8,7 @@ option java_multiple_files = true;
 option java_package = "com.brekhin.movie.grpc.service";
 
 service MovieService {
-    rpc getAllMovies(Empty) returns (gRPCGetAllMoviesResponse);
+    rpc getAllMovies(gRPCGetAllMoviesRequest) returns (gRPCGetAllMoviesResponse);
 
     rpc addMovie(gRPCAddMovieRequest) returns (gRPCAddMovieResponse);
 

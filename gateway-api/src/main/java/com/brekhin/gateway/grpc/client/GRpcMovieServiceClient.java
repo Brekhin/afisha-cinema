@@ -48,4 +48,8 @@ public class GRpcMovieServiceClient {
     public Empty removeMovie(gRPCRemoveMovieRequest request) {
         return movieServiceBlockingStub.removeMovie(request);
     }
+
+    public gRPCGetAllMoviesResponse getAllMovies(gRPCGetAllMoviesRequest request){
+        return movieServiceBlockingStub.getAllMovies(request);
+    }
 }

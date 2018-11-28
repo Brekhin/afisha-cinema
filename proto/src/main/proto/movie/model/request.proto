@@ -18,3 +18,6 @@ message gRPCRemoveMovieRequest {
    int64 movieId = 1;
 }
 
+message gRPCGetAllMoviesRequest {
+
+}

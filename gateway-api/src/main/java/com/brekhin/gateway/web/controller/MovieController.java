@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -39,6 +40,11 @@ public class MovieController {
     public ResponseEntity<Void> removeMovie(@RequestBody @Valid DeleteMovieRequest request){
         movieService.removeMovieById(request.getMovieId());
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<GetMovie>> getAllMovies() {
+        return ResponseEntity.ok(movieService.getAllMovies());
     }
 
 }

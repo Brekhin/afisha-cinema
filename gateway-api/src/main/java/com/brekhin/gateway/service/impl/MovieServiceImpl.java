@@ -6,6 +6,8 @@ import com.brekhin.gateway.grpc.client.GRpcMovieServiceClient;
 import com.brekhin.gateway.service.MovieService;
 import com.brekhin.gateway.web.to.in.AddMovieRequest;
 import com.brekhin.gateway.web.to.out.GetMovie;
+import com.brekhin.movie.grpc.model.GMovie;
+import com.brekhin.movie.grpc.model.gRPCGetAllMoviesRequest;
 import com.brekhin.movie.grpc.model.gRPCGetMovieRequest;
 import com.brekhin.movie.grpc.model.gRPCRemoveMovieRequest;
 import io.grpc.StatusRuntimeException;
@@ -13,6 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -53,5 +58,14 @@ public class MovieServiceImpl implements MovieService {
         rpcMovieServiceClient.removeMovie(gRPCRemoveMovieRequest.newBuilder()
                 .setMovieId(movieId)
                 .build());
+    }
+
+    @Override
+    public List<GetMovie> getAllMovies() {
+        return rpcMovieServiceClient.getAllMovies(gRPCGetAllMoviesRequest.newBuilder().build())
+                .getMoviesList()
+                    .stream()
+                    .map(t -> MovieConverter.convert(t))
+                    .collect(Collectors.toList());
     }
 }

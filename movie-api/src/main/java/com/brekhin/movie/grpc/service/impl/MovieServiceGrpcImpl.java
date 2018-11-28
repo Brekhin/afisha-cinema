@@ -30,7 +30,7 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
     }
 
     @Override
-    public void getAllMovies(Empty request, StreamObserver<gRPCGetAllMoviesResponse> responseObserver) {
+    public void getAllMovies(gRPCGetAllMoviesRequest request, StreamObserver<gRPCGetAllMoviesResponse> responseObserver) {
         try {
             List<MovieEntity> allMovies = movieService.getAllMovies();
             responseObserver.onNext(gRPCGetAllMoviesResponse.newBuilder().
