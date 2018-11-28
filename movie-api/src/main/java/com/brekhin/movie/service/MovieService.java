@@ -9,9 +9,9 @@ public interface MovieService {
 
     List<MovieEntity> getAllMovies();
 
-    UUID addMovie(MovieEntity movieEntity);
+    Long addMovie(MovieEntity movieEntity);
 
-    MovieEntity getMovie(UUID movieId);
+    MovieEntity getMovie(Long movieId);
 
-    void removeMovie(UUID movieId);
+    void removeMovie(Long movieId);
 }

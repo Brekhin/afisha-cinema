@@ -6,14 +6,14 @@ import java.util.UUID;
 
 public class AddMovie {
 
-    private UUID movieId;
+    private Long movieId;
 
-    public AddMovie(UUID movieId) {
+    public AddMovie(Long movieId) {
         this.movieId = movieId;
     }
 
     @JsonGetter("movieId")
-    public UUID getMovieId() {
+    public Long getMovieId() {
         return movieId;
     }
 }

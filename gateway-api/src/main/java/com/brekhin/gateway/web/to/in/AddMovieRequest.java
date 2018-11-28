@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class AddMovieRequest {
 
-    private UUID movieId;
+    private Long movieId;
 
     private String name;
 
@@ -20,7 +20,7 @@ public class AddMovieRequest {
 
     private int duration;
 
-    public AddMovieRequest(@JsonProperty("movieId") UUID movieId,
+    public AddMovieRequest(@JsonProperty("movieId") Long movieId,
                            @JsonProperty("movieName") String name,
                            @JsonProperty("rentalStartDate") Timestamp rentalStartDate,
                            @JsonProperty("rentalEndDate") Timestamp rentalEndDate,
@@ -34,7 +34,7 @@ public class AddMovieRequest {
         this.duration = duration;
     }
 
-    public UUID getMovieId() {
+    public Long getMovieId() {
         return movieId;
     }
 

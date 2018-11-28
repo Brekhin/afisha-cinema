@@ -14,7 +14,8 @@ public class MovieEntity {
 
     @Id
     @Column(name = "movie_id", nullable = false)
-    private UUID movieId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long movieId;
 
     private String name;
 
@@ -28,11 +29,11 @@ public class MovieEntity {
 
     private int duration;
 
-    public UUID getMovieId() {
+    public Long getMovieId() {
         return movieId;
     }
 
-    public MovieEntity setMovieId(UUID movieId) {
+    public MovieEntity setMovieId(Long movieId) {
         this.movieId = movieId;
         return this;
     }

@@ -22,6 +22,8 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
 
     private final MovieService movieService;
 
+    public static final Logger log = LoggerFactory.getLogger(MovieServiceGrpcImpl.class);
+
     @Autowired
     public MovieServiceGrpcImpl(MovieService movieService) {
         this.movieService = movieService;
@@ -47,9 +49,9 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
     @Override
     public void addMovie(gRPCAddMovieRequest request, StreamObserver<gRPCAddMovieResponse> responseObserver) {
         try {
-            UUID movieUID = movieService.addMovie(ProtoConvertToEntity.convert(request.getMovie()));
+            Long movieId = movieService.addMovie(ProtoConvertToEntity.convert(request.getMovie()));
             responseObserver.onNext(gRPCAddMovieResponse.newBuilder()
-                    .setMovieId(ProtoConvertToEntity.convert(movieUID))
+                    .setMovieId(movieId)
                     .build());
 
             responseObserver.onCompleted();
@@ -61,7 +63,8 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
     @Override
     public void getMovie(gRPCGetMovieRequest request, StreamObserver<gRPCGetMovieResponse> responseObserver) {
         try {
-            MovieEntity movie = movieService.getMovie(ProtoConvertToEntity.convert(request.getMovieId()));
+            MovieEntity movie = movieService.getMovie(request.getMovieId());
+
             responseObserver.onNext(gRPCGetMovieResponse.newBuilder()
                     .setMovie(ProtoConvertToEntity.convert(movie))
                     .build());
@@ -74,7 +77,7 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
     @Override
     public void removeMovie(gRPCRemoveMovieRequest request, StreamObserver<Empty> responseObserver) {
         try {
-            movieService.removeMovie(ProtoConvertToEntity.convert(request.getMovieId()));
+            movieService.removeMovie(request.getMovieId());
             responseObserver.onNext(Empty.newBuilder().build());
             responseObserver.onCompleted();
         } catch (Exception e) {

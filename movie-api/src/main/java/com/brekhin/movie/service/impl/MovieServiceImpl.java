@@ -30,12 +30,13 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public UUID addMovie(MovieEntity movieEntity) {
+    public Long addMovie(MovieEntity movieEntity) {
         return movieRepository.save(movieEntity).getMovieId();
     }
 
     @Override
-    public MovieEntity getMovie(UUID movieId) {
+    public MovieEntity getMovie(Long movieId) {
+        LOGGER.info("REQUEST ID : {} ", movieId.toString());
         return movieRepository.findById(movieId)
                 .orElseThrow(() -> {
                     LOGGER.warn("Not found movie with id = {}", movieId);
@@ -44,7 +45,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void removeMovie(UUID movieId) {
+    public void removeMovie(Long movieId) {
         LOGGER.info("delete movie with id = {}", movieId);
         movieRepository.deleteById(movieId);
     }

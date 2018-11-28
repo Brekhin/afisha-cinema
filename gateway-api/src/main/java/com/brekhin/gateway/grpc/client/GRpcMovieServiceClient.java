@@ -1,7 +1,7 @@
 package com.brekhin.gateway.grpc.client;
 
-import com.brekhin.movie.grpc.model.gRPCAddMovieRequest;
-import com.brekhin.movie.grpc.model.gRPCAddMovieResponse;
+import com.brekhin.movie.grpc.Empty;
+import com.brekhin.movie.grpc.model.*;
 import com.brekhin.movie.grpc.service.MovieServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -39,5 +39,13 @@ public class GRpcMovieServiceClient {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public gRPCGetMovieResponse getMovie(gRPCGetMovieRequest request) {
+        return movieServiceBlockingStub.getMovie(request);
+    }
+
+    public Empty removeMovie(gRPCRemoveMovieRequest request) {
+        return movieServiceBlockingStub.removeMovie(request);
     }
 }

@@ -6,7 +6,7 @@ option java_multiple_files = true;
 option java_package = "com.brekhin.movie.grpc.model";
 
 message GMovie {
-    GUuid uuid = 1;
+    int64 movieId = 1;
     string name = 2;
     int64 rentalStartDate = 3;
     int64 rentalEndDate = 4;

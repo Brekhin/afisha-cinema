@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class MovieServiceGrpcImplTest {
 
-    private static final UUID MOVIE_UUID = UUID.fromString("fc4ca5a6-0cda-43df-967b-59883afc3964");
+    private static final Long MOVIE_ID =145L;
 
     private static final String NAME = "GOT";
 
@@ -44,10 +44,10 @@ public class MovieServiceGrpcImplTest {
     @Test
     public void testGetMovieByID() {
         MovieEntity serviceResponse = getMockMovieEntity();
-        when(movieService.getMovie(any(UUID.class))).thenReturn(serviceResponse);
+        when(movieService.getMovie(any(Long.class))).thenReturn(serviceResponse);
 
         gRPCGetMovieRequest request = gRPCGetMovieRequest.newBuilder()
-                .setMovieId(GUuid.newBuilder().setUuid(MOVIE_UUID.toString()).build())
+                .setMovieId(MOVIE_ID)
                 .build();
         StreamObserver<gRPCGetMovieResponse> observer = mock(StreamObserver.class);
 
@@ -60,7 +60,7 @@ public class MovieServiceGrpcImplTest {
 
         gRPCGetMovieResponse response = argumentCaptor.getValue();
 
-        assertEquals(response.getMovie().getUuid().getUuid(), MOVIE_UUID.toString());
+        assertEquals(java.util.Optional.ofNullable(response.getMovie().getMovieId()).get(), MOVIE_ID);
         assertEquals(new Timestamp(response.getMovie().getRentalStartDate()), RENTAL_START_DATE);
         assertEquals(new Timestamp(response.getMovie().getRentalEndDate()), RENTAL_END_DATE);
     }
@@ -70,7 +70,7 @@ public class MovieServiceGrpcImplTest {
     public void addMovieTest() {
         MovieEntity movieEntity = getMockMovieEntity();
 
-        when(movieService.addMovie(any(MovieEntity.class))).thenReturn(MOVIE_UUID);
+        when(movieService.addMovie(any(MovieEntity.class))).thenReturn(MOVIE_ID);
 
         gRPCAddMovieRequest request = gRPCAddMovieRequest.newBuilder()
                 .setMovie(ProtoConvertToEntity.convert(getMockMovieEntity()))
@@ -85,14 +85,14 @@ public class MovieServiceGrpcImplTest {
         verify(observer, times(1)).onNext(captor.capture());
 
         gRPCAddMovieResponse response = captor.getValue();
-        assertEquals(response.getMovieId(), ProtoConvertToEntity.convert(MOVIE_UUID));
+        assertEquals(java.util.Optional.ofNullable(response.getMovieId()).get(), MOVIE_ID);
 
     }
 
 
     private MovieEntity getMockMovieEntity() {
         return new MovieEntity()
-                .setMovieId(MOVIE_UUID)
+                .setMovieId(MOVIE_ID)
                 .setName(NAME)
                 .setRentalStartDate(RENTAL_START_DATE)
                 .setRentalEndDate(RENTAL_END_DATE)

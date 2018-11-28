@@ -11,10 +11,10 @@ message gRPCAddMovieRequest {
 }
 
 message gRPCGetMovieRequest {
-    GUuid movieId = 1;
+    int64 movieId = 1;
 }
 
 message gRPCRemoveMovieRequest {
-   string movieId = 1;
+   int64 movieId = 1;
 }
 
