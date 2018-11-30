@@ -24,5 +24,6 @@
 		<module>proto</module>
 		<module>movie-api</module>
         <module>gateway-api</module>
+        <module>session-api</module>
     </modules>
 </project>
