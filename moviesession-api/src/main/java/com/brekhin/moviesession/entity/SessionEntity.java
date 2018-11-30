@@ -1,4 +1,4 @@
-package com.brekhin.session.entity;
+package com.brekhin.moviesession.entity;
 
 
 import javax.persistence.Entity;
