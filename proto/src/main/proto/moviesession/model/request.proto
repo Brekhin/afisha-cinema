@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "movie/model/model.proto";
+import "common/base.proto";
+
+option java_multiple_files = true;
+option java_package = "com.brekhin.moviesession.grpc.model";
+
+message gRPCAddCinemaHallRequest {
+    GCinemaHall cinemaHall = 1;
+}
+
+message gRPCGetCinemaHallRequest {
+    int64 cinemaHallId = 1;
+}
+
+message gRPCAddSessionRequest  {
+    GMovieSession cinemaHall = 1;
+}
+
+message gRPCGetSessionRequest {
+    int64 sessionId = 1;
+}

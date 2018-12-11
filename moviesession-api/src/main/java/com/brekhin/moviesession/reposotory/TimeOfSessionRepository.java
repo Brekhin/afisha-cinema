@@ -1,9 +1,9 @@
 package com.brekhin.moviesession.reposotory;
 
-import com.brekhin.moviesession.entity.SessionEntity;
+import com.brekhin.moviesession.entity.TimeOfSessionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SessionRepository  extends JpaRepository<SessionEntity, Long> {
+public interface TimeOfSessionRepository  extends JpaRepository<TimeOfSessionEntity, Long> {
 }
