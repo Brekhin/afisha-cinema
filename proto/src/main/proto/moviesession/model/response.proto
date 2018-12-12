@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+import "moviesession/model/model.proto";
+
+option java_multiple_files = true;
+option java_package = "com.brekhin.moviesession.grpc.model";
+
+message gRPCAddDateOfSessionResponse {
+    int64 dateOfSessionId = 1;
+}
+
+message gRPCAddTimeOfSessionResponse {
+    int64 timeOfSessionId = 1;
+}
+
+message gRPCAssigneTimeOfSessionsWithDayResponse {
+
+}
+
+message gRPCAssignMovieWithSessionResponse {
+
+}
+
+message gRPCGetAllDateOfSessionResponse {
+    repeated GDateOfSession dateOfSession = 1;
+}
+
+//+
+message gRPCGetAllSessionByDateResponse {
+    GDateOfSession dateOfSession = 1;
+}
+//+
+message gRPCGetInfoAboutTimeOfSessionInSpecificDayResponse {
+    GTimeOfSession timeOfSessions = 1;
+}
+

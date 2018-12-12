@@ -18,23 +18,17 @@ public class TimeOfSessionEntity {
     @Column(name = "time_of_session")
     private Timestamp timeOfSessionDate;
 
-    @ElementCollection
-    @CollectionTable(
-        name = "movies",
-        joinColumns = @JoinColumn(name = "time_of_session_id", referencedColumnName = "time_of_session_id")
-    )
-    @Column(name = "movieId")
-    private List<Long> movieIds;
+    private Long movieId;
 
     @ManyToOne
     @JoinColumn(name = "date_of_sessionid", nullable = false)
     private DateOfSessionEntity dateOfSession;
 
     public TimeOfSessionEntity(Long timeOfSessionId, Timestamp timeOfSessionDate,
-                               List<Long> movieIds, DateOfSessionEntity dateOfSession) {
+                               Long movieId, DateOfSessionEntity dateOfSession) {
         this.timeOfSessionId = timeOfSessionId;
         this.timeOfSessionDate = timeOfSessionDate;
-        this.movieIds = movieIds;
+        this.movieId = movieId;
         this.dateOfSession = dateOfSession;
     }
 
@@ -45,7 +39,7 @@ public class TimeOfSessionEntity {
         return timeOfSessionId;
     }
 
-    private TimeOfSessionEntity setTimeOfSessionId(Long timeOfSessionId) {
+    public TimeOfSessionEntity setTimeOfSessionId(Long timeOfSessionId) {
         this.timeOfSessionId = timeOfSessionId;
         return this;
     }
@@ -60,21 +54,13 @@ public class TimeOfSessionEntity {
     }
 
 
-    public List<Long> getMovieIds() {
-        return movieIds;
+    public Long getMovieId() {
+        return movieId;
     }
 
-    public TimeOfSessionEntity setMovieIds(Long movieId) {
-        if (!movieIds.isEmpty()) {
-            movieIds.add(movieId);
-        } else {
-            movieIds = new ArrayList<>();
-        }
+    public TimeOfSessionEntity setMovieId(Long movieId) {
+        this.movieId = movieId;
         return this;
-    }
-
-    public void setMovieIds(List<Long> movieIds) {
-        this.movieIds = movieIds;
     }
 
     public DateOfSessionEntity getDateOfSession() {

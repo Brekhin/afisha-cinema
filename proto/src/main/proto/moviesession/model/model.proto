@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.brekhin.moviesession.grpc.model";
+
+message GTimeOfSession {
+    int64 timeOfSessionId = 1;
+    int64 timeOfSessionDate = 2;
+    GDateOfSession dateOfSessionId = 3;
+    int64 movieIds = 4;
+}
+
+message GDateOfSession {
+    int64 dateOfSessionId = 1;
+    int64 dateOfSession = 2;
+    repeated GTimeOfSession timeOfSession = 3;
+}

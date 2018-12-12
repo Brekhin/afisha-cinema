@@ -2,6 +2,7 @@ package com.brekhin.moviesession.service.impl;
 
 import com.brekhin.moviesession.entity.DateOfSessionEntity;
 import com.brekhin.moviesession.entity.TimeOfSessionEntity;
+import com.brekhin.moviesession.exception.NotFoundSessionException;
 import com.brekhin.moviesession.reposotory.DateOfSessionRepository;
 import com.brekhin.moviesession.reposotory.TimeOfSessionRepository;
 import com.brekhin.moviesession.service.CinemaSessionService;
@@ -38,24 +39,61 @@ public class CinemaSessionServiceImpl implements CinemaSessionService {
     }
 
     @Override
-    public Set<TimeOfSessionEntity> getAllSessionsByDate(Long dateOfSessionId) {
-        return dateOfSessionRepository.findById(dateOfSessionId).get().getTimeOfSessionEntitie();
+    public DateOfSessionEntity getAllSessionsByDate(Long dateOfSessionId) {
+        return dateOfSessionRepository.findById(dateOfSessionId)
+                .orElseThrow(() -> {
+                    throw new NotFoundSessionException("Not found session with id = " + dateOfSessionId.toString());
+                });
     }
 
     @Override
-    public TimeOfSessionEntity getInfoAboutSesionByDate(Long timeOfSessionId, Long dateOfSessionId) {
-        return dateOfSessionRepository.getSingleSessionByDateAndTime(timeOfSessionId, dateOfSessionId);
+    public TimeOfSessionEntity getInfoAboutTimeOfSessionInSpecificDay(Long timeOfSessionId, Long dateOfSessionId) {
+        return dateOfSessionRepository.getSingleSessionByDateAndTime(timeOfSessionId, dateOfSessionId)
+                .orElseThrow(() -> {
+                    throw new IllegalArgumentException(
+                            String.format("Not found DateOfSession with id = %s and TimeOfSession with id = %s",
+                                    dateOfSessionId.toString(), timeOfSessionId.toString())
+                    );
+                });
+    }
+
+    @Override
+    public List<DateOfSessionEntity> getAllDateOfSessions() {
+        return dateOfSessionRepository.findAll();
     }
 
     @Override
     public void assigneTimeOfSessionsWithDay(Long timeOfSessionId, Long dateOfSessionId) {
-        Optional<TimeOfSessionEntity> session = timeOfSessionRepository.findById(timeOfSessionId);
-        DateOfSessionEntity dateOfSession = dateOfSessionRepository.findById(dateOfSessionId).get().setTimeOfSession(session.get());
+        TimeOfSessionEntity timeOfSessionEntity = timeOfSessionRepository
+                .findById(timeOfSessionId)
+                .orElseThrow(() -> {
+                    throw new IllegalArgumentException(
+                            String.format("Not found TimeOfSession with id = %s",
+                                    timeOfSessionId.toString()));
+                });
+        DateOfSessionEntity dateOfSession = dateOfSessionRepository
+                .findById(dateOfSessionId)
+                .orElseThrow(() -> {
+                    throw new IllegalArgumentException(
+                            String.format("Not found DateOfSession with id = %s",
+                                    dateOfSessionId.toString()));
+                });
+
+        dateOfSession.setTimeOfSession(timeOfSessionEntity);
+
         dateOfSessionRepository.save(dateOfSession);
     }
 
     @Override
     public void assignMovieWithSession(Long timeOfSessionId, Long movieId) {
-
+        TimeOfSessionEntity timeOfSessionEntity = timeOfSessionRepository
+                .findById(timeOfSessionId)
+                .orElseThrow(() -> {
+                    throw new IllegalArgumentException(
+                            String.format("Not found TimeOfSession with id = %s",
+                                    timeOfSessionId.toString()));
+                });
+        timeOfSessionEntity.setMovieId(movieId);
+        timeOfSessionRepository.save(timeOfSessionEntity);
     }
 }

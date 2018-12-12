@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "moviesession/model/request.proto";
+import "moviesession/model/response.proto";
+import "common/base.proto";
+
+option java_multiple_files = true;
+option java_package = "com.brekhin.moviesession.grpc.service";
+
+service MovieSessionService {
+
+    rpc addDateOfSession(gRPCAddDateOfSessionRequest) returns (gRPCAddDateOfSessionResponse);
+
+    rpc getAllDateOfSession(gRPCGetAllDateOfSessionRequest) returns (gRPCGetAllDateOfSessionResponse);
+
+    rpc addTimeOfSession(gRPCAddTimeOfSessionRequest) returns (gRPCAddTimeOfSessionResponse);
+
+    rpc gRPCGetAllSessionByDate(gRPCGetAllSessionByDateRequest) returns (gRPCGetAllSessionByDateResponse);
+
+    rpc getInfoAboutTimeOfSessionInSpecificDay(gRPCGetInfoAboutTimeOfSessionInSpecificDayRequest) returns (gRPCGetInfoAboutTimeOfSessionInSpecificDayResponse);
+
+    rpc assigneTimeOfSessionsWithDay(gRPCAssigneTimeOfSessionsWithDayRequest) returns (gRPCAssigneTimeOfSessionsWithDayResponse);
+
+    rpc assignMovieWithSession(gRPCAssignMovieWithSessionRequest) returns (gRPCAssignMovieWithSessionResponse);
+}
