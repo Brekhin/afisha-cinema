@@ -10,16 +10,17 @@ import com.brekhin.moviesession.service.CinemaSessionService;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @GRpcService
 public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSessionServiceImplBase {
 
+    private final static Logger log = LoggerFactory.getLogger(MovieSessionServiceGrpcImpl.class);
     private final CinemaSessionService cinemaSessionService;
 
     @Autowired
@@ -33,6 +34,7 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
             response.onNext(gRPCAddDateOfSessionResponse.newBuilder()
                     .setDateOfSessionId(dateOfSessionId)
                     .build());
+            response.onCompleted();
         } catch (Exception e) {
             onError(response, e);
         }
@@ -56,6 +58,7 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
     public void addTimeOfSession(gRPCAddTimeOfSessionRequest request, StreamObserver<gRPCAddTimeOfSessionResponse> response) {
         try {
             Long timeOfSession = cinemaSessionService.addTimeOfSession(ProtoConvertToEntity.convert(request.getTimeOfSession()));
+          //  log.warn("dd" + ProtoConvertToEntity.convert(request.getTimeOfSession().getDateOfSession().getDateOfSessionId());
             response.onNext(gRPCAddTimeOfSessionResponse.newBuilder().setTimeOfSessionId(timeOfSession).build());
             response.onCompleted();
         } catch (Exception e) {

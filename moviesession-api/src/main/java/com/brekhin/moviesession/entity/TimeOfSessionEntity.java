@@ -1,6 +1,9 @@
 package com.brekhin.moviesession.entity;
 
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -11,29 +14,17 @@ import java.util.List;
 public class TimeOfSessionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "time_of_session_id")
+    @Column(name = "timeOfSessionId")
     private Long timeOfSessionId;
 
-    @Column(name = "time_of_session")
+    @Column(name = "timeOfSession")
     private Timestamp timeOfSessionDate;
 
     private Long movieId;
 
-    @ManyToOne
-    @JoinColumn(name = "date_of_sessionid", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dateOfSessionId")
     private DateOfSessionEntity dateOfSession;
-
-    public TimeOfSessionEntity(Long timeOfSessionId, Timestamp timeOfSessionDate,
-                               Long movieId, DateOfSessionEntity dateOfSession) {
-        this.timeOfSessionId = timeOfSessionId;
-        this.timeOfSessionDate = timeOfSessionDate;
-        this.movieId = movieId;
-        this.dateOfSession = dateOfSession;
-    }
-
-    public TimeOfSessionEntity() {
-    }
 
     public Long getTimeOfSessionId() {
         return timeOfSessionId;
@@ -72,5 +63,7 @@ public class TimeOfSessionEntity {
         return this;
     }
 
-
+    public Timestamp getTimeOfSessionDate() {
+        return timeOfSessionDate;
+    }
 }

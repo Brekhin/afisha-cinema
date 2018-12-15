@@ -1,31 +1,19 @@
-package com.brekhin.gateway.web.to.in;
+package com.brekhin.gateway.web.to.out.movie;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.fasterxml.jackson.annotation.JsonGetter;
 
 import java.sql.Timestamp;
-import java.util.UUID;
 
-public class AddMovieRequest {
+public class GetMovie {
 
     private Long movieId;
-
     private String name;
-
     private Timestamp rentalStartDate;
-
     private Timestamp rentalEndDate;
-
     private String genre;
-
     private int duration;
 
-    public AddMovieRequest(@JsonProperty("movieId") Long movieId,
-                           @JsonProperty("movieName") String name,
-                           @JsonProperty("rentalStartDate") Timestamp rentalStartDate,
-                           @JsonProperty("rentalEndDate") Timestamp rentalEndDate,
-                           @JsonProperty("genre") String genre,
-                           @JsonProperty("duration") int duration) {
+    public GetMovie(Long movieId, String name, Timestamp rentalStartDate, Timestamp rentalEndDate, String genre, int duration) {
         this.movieId = movieId;
         this.name = name;
         this.rentalStartDate = rentalStartDate;
@@ -34,32 +22,33 @@ public class AddMovieRequest {
         this.duration = duration;
     }
 
+    @JsonGetter("movieId")
     public Long getMovieId() {
         return movieId;
     }
 
+    @JsonGetter("name")
     public String getName() {
         return name;
     }
 
+    @JsonGetter("getRentalStartDate")
     public Timestamp getRentalStartDate() {
         return rentalStartDate;
     }
 
+    @JsonGetter("getRentalEndDate")
     public Timestamp getRentalEndDate() {
         return rentalEndDate;
     }
 
+    @JsonGetter("genre")
     public String getGenre() {
         return genre;
     }
 
+    @JsonGetter("duration")
     public int getDuration() {
         return duration;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
     }
 }

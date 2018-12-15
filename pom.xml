@@ -23,7 +23,7 @@
 	<modules>
 		<module>proto</module>
 		<module>movie-api</module>
+		<module>moviesession-api</module>
         <module>gateway-api</module>
-        <module>session-api</module>
     </modules>
 </project>

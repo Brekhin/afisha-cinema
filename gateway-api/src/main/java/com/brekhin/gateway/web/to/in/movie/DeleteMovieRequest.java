@@ -1,4 +1,4 @@
-package com.brekhin.gateway.web.to.in;
+package com.brekhin.gateway.web.to.in.movie;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;

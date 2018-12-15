@@ -15,7 +15,7 @@ service MovieSessionService {
 
     rpc addTimeOfSession(gRPCAddTimeOfSessionRequest) returns (gRPCAddTimeOfSessionResponse);
 
-    rpc gRPCGetAllSessionByDate(gRPCGetAllSessionByDateRequest) returns (gRPCGetAllSessionByDateResponse);
+    rpc getAllSessionByDate(gRPCGetAllSessionByDateRequest) returns (gRPCGetAllSessionByDateResponse);
 
     rpc getInfoAboutTimeOfSessionInSpecificDay(gRPCGetInfoAboutTimeOfSessionInSpecificDayRequest) returns (gRPCGetInfoAboutTimeOfSessionInSpecificDayResponse);
 

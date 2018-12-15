@@ -1,8 +1,6 @@
-package com.brekhin.gateway.web.to.out;
+package com.brekhin.gateway.web.to.out.movie;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-
-import java.util.UUID;
 
 public class AddMovie {
 

@@ -1,10 +1,10 @@
 package com.brekhin.gateway.web.controller;
 
 import com.brekhin.gateway.service.MovieService;
-import com.brekhin.gateway.web.to.in.AddMovieRequest;
-import com.brekhin.gateway.web.to.in.DeleteMovieRequest;
-import com.brekhin.gateway.web.to.out.AddMovie;
-import com.brekhin.gateway.web.to.out.GetMovie;
+import com.brekhin.gateway.web.to.in.movie.AddMovieRequest;
+import com.brekhin.gateway.web.to.in.movie.DeleteMovieRequest;
+import com.brekhin.gateway.web.to.out.movie.AddMovie;
+import com.brekhin.gateway.web.to.out.movie.GetMovie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/movies", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -1,6 +1,10 @@
 package com.brekhin.moviesession.entity;
 
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -15,20 +19,29 @@ public class DateOfSessionEntity {
     private Timestamp dateOfSession;
     private Set<TimeOfSessionEntity> timeOfSession = new HashSet<>();
 
+    public DateOfSessionEntity() {
+    }
+
+    public DateOfSessionEntity(Long dateOfSessionId, Timestamp dateOfSession,
+                               Set<TimeOfSessionEntity> timeOfSession) {
+        this.dateOfSessionId = dateOfSessionId;
+        this.dateOfSession = dateOfSession;
+        this.timeOfSession = timeOfSession;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "date_of_sessionid")
+    @Column(name = "dateOfSessionId")
     public Long getDateOfSessionId() {
         return dateOfSessionId;
     }
 
-    @Column(name = "date_of_session")
+    @Column(name = "dateOfSessionTime")
     public Timestamp getDateOfSession() {
         return dateOfSession;
     }
 
-    @OneToMany(mappedBy = "dateOfSession", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    public Set<TimeOfSessionEntity> getTimeOfSessionEntitie() {
+    @OneToMany(mappedBy = "dateOfSession", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public Set<TimeOfSessionEntity> getTimeOfSession() {
         return timeOfSession;
     }
 
@@ -42,15 +55,23 @@ public class DateOfSessionEntity {
         return this;
     }
 
-    public DateOfSessionEntity setTimeOfSession(TimeOfSessionEntity timeOfSession) {
-        this.timeOfSession.add(timeOfSession);
-        return this;
-    }
-
     public DateOfSessionEntity setTimeOfSession(Set<TimeOfSessionEntity> timeOfSession) {
         this.timeOfSession = timeOfSession;
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o, false);
+    }
 
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 }

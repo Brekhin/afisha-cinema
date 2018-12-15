@@ -1,7 +1,7 @@
 package com.brekhin.gateway.converter;
 
-import com.brekhin.gateway.web.to.in.AddMovieRequest;
-import com.brekhin.gateway.web.to.out.GetMovie;
+import com.brekhin.gateway.web.to.in.movie.AddMovieRequest;
+import com.brekhin.gateway.web.to.out.movie.GetMovie;
 import com.brekhin.movie.grpc.model.GMovie;
 import com.brekhin.movie.grpc.model.gRPCAddMovieRequest;
 

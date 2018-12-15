@@ -4,9 +4,9 @@ spring:
   application:
     name: moviesession-api
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/moviesession_api"
-    username: root
+    driver-class-name: org.postgresql.Driver
+    url: "jdbc:postgresql://localhost:5432/moviesession_api"
+    username: postgres
     password: "root"
   jpa:
     generate-ddl: true

@@ -13,3 +13,6 @@ gateway:
     MovieServiceGrpc:
       host: localhost
       port: 6567
+    MovieSessionServiceGrpc:
+      host: localhost
+      port: 6568

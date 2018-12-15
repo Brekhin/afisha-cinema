@@ -1,10 +1,9 @@
 package com.brekhin.gateway.service;
 
-import com.brekhin.gateway.web.to.in.AddMovieRequest;
-import com.brekhin.gateway.web.to.out.GetMovie;
+import com.brekhin.gateway.web.to.in.movie.AddMovieRequest;
+import com.brekhin.gateway.web.to.out.movie.GetMovie;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface MovieService {
     Long addMovie(AddMovieRequest request);
