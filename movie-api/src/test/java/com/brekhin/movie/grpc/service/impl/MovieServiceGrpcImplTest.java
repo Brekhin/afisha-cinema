@@ -27,10 +27,6 @@ public class MovieServiceGrpcImplTest {
 
     private static final String NAME = "GOT";
 
-    private static final Timestamp RENTAL_START_DATE = Timestamp.valueOf("2012-08-08 00:00:00");
-
-    private static final Timestamp RENTAL_END_DATE = Timestamp.valueOf("2020-08-08 00:00:00");
-
     private static final String GENRE = "Fantasy";
 
     private static final int DURATION = 45;
@@ -61,8 +57,6 @@ public class MovieServiceGrpcImplTest {
         gRPCGetMovieResponse response = argumentCaptor.getValue();
 
         assertEquals(java.util.Optional.ofNullable(response.getMovie().getMovieId()).get(), MOVIE_ID);
-        assertEquals(new Timestamp(response.getMovie().getRentalStartDate()), RENTAL_START_DATE);
-        assertEquals(new Timestamp(response.getMovie().getRentalEndDate()), RENTAL_END_DATE);
     }
 
 
@@ -94,8 +88,6 @@ public class MovieServiceGrpcImplTest {
         return new MovieEntity()
                 .setMovieId(MOVIE_ID)
                 .setName(NAME)
-                .setRentalStartDate(RENTAL_START_DATE)
-                .setRentalEndDate(RENTAL_END_DATE)
                 .setGenre(GENRE)
                 .setDuration(DURATION);
     }

@@ -13,24 +13,12 @@ message gRPCAddTimeOfSessionResponse {
     int64 timeOfSessionId = 1;
 }
 
-message gRPCAssigneTimeOfSessionsWithDayResponse {
 
-}
-
-message gRPCAssignMovieWithSessionResponse {
-
-}
-
-message gRPCGetAllDateOfSessionResponse {
-    repeated GDateOfSession dateOfSession = 1;
-}
-
-//+
-message gRPCGetAllSessionByDateResponse {
-    GDateOfSession dateOfSession = 1;
-}
-//+
-message gRPCGetInfoAboutTimeOfSessionInSpecificDayResponse {
+message gRPCGetInfoTimeOfSessionByIdResponse {
     GTimeOfSession timeOfSessions = 1;
+}
+
+message gRPCGetSessionsByMovieIdResponse {
+    repeated GTimeOfSession sessions = 1;
 }
 

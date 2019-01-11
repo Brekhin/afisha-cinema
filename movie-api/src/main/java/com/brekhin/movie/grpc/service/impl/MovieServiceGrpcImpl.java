@@ -84,6 +84,4 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
             ErrorStatus.status(responseObserver, e);
         }
     }
-
-
 }

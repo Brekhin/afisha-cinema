@@ -1,7 +1,7 @@
 package com.brekhin.moviesession.grpc.service.impl;
 
+import com.brekhin.movie.grpc.Empty;
 import com.brekhin.moviesession.converter.ProtoConvertToEntity;
-import com.brekhin.moviesession.entity.DateOfSessionEntity;
 import com.brekhin.moviesession.entity.TimeOfSessionEntity;
 import com.brekhin.moviesession.exception.NotFoundSessionException;
 import com.brekhin.moviesession.grpc.model.*;
@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,37 +29,9 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
         this.cinemaSessionService = cinemaSessionService;
     }
 
-    public void addDateOfSession(gRPCAddDateOfSessionRequest request, StreamObserver<gRPCAddDateOfSessionResponse> response) {
-        try {
-            Long dateOfSessionId = cinemaSessionService.addDateOfSession(ProtoConvertToEntity.convert(request.getDateOfSession()));
-            response.onNext(gRPCAddDateOfSessionResponse.newBuilder()
-                    .setDateOfSessionId(dateOfSessionId)
-                    .build());
-            response.onCompleted();
-        } catch (Exception e) {
-            onError(response, e);
-        }
-    }
-
-    public void getAllDateOfSession(gRPCGetAllDateOfSessionRequest request, StreamObserver<gRPCGetAllDateOfSessionResponse> response) {
-        try {
-            List<DateOfSessionEntity> allSessionsByDate = cinemaSessionService.getAllDateOfSessions();
-            response.onNext(gRPCGetAllDateOfSessionResponse.newBuilder()
-                    .addAllDateOfSession(
-                            allSessionsByDate.stream()
-                                    .map(ProtoConvertToEntity::convert)
-                                    .collect(Collectors.toList()))
-                    .build());
-            response.onCompleted();
-        } catch (Exception e) {
-            onError(response, e);
-        }
-    }
-
     public void addTimeOfSession(gRPCAddTimeOfSessionRequest request, StreamObserver<gRPCAddTimeOfSessionResponse> response) {
         try {
             Long timeOfSession = cinemaSessionService.addTimeOfSession(ProtoConvertToEntity.convert(request.getTimeOfSession()));
-          //  log.warn("dd" + ProtoConvertToEntity.convert(request.getTimeOfSession().getDateOfSession().getDateOfSessionId());
             response.onNext(gRPCAddTimeOfSessionResponse.newBuilder().setTimeOfSessionId(timeOfSession).build());
             response.onCompleted();
         } catch (Exception e) {
@@ -66,24 +39,12 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
         }
     }
 
-    public void getAllSessionsByDate(gRPCGetAllSessionByDateRequest request, StreamObserver<gRPCGetAllSessionByDateResponse> response) {
-
+    public void getTimeOfSessionById(gRPCGetInfoTimeOfSessionByIdRequest request,
+                                     StreamObserver<gRPCGetInfoTimeOfSessionByIdResponse> response) {
         try {
-            DateOfSessionEntity allSessionsByDate = cinemaSessionService.getAllSessionsByDate(request.getDateOfSessionId());
-            response.onNext(gRPCGetAllSessionByDateResponse.newBuilder()
-                    .setDateOfSession(ProtoConvertToEntity.convert(allSessionsByDate)).build());
-            response.onCompleted();
-        } catch (Exception e) {
-            onError(response, e);
-        }
-    }
-
-    public void getInfoAboutTimeOfSessionInSpecificDay(gRPCGetInfoAboutTimeOfSessionInSpecificDayRequest request,
-                                                       StreamObserver<gRPCGetInfoAboutTimeOfSessionInSpecificDayResponse> response) {
-        try {
-            TimeOfSessionEntity infoAboutTimeOfSessionInSpecificDay = cinemaSessionService.getInfoAboutTimeOfSessionInSpecificDay(request.getTimeOfSessionId(), request.getDateOfSessionId());
-            response.onNext(gRPCGetInfoAboutTimeOfSessionInSpecificDayResponse.newBuilder()
-                    .setTimeOfSessions(ProtoConvertToEntity.convert(infoAboutTimeOfSessionInSpecificDay))
+            TimeOfSessionEntity getTimeOfSessionById = cinemaSessionService.getTimeOfSessionById(request.getTimeOfSessionId());
+            response.onNext(gRPCGetInfoTimeOfSessionByIdResponse.newBuilder()
+                    .setTimeOfSessions(ProtoConvertToEntity.convert(getTimeOfSessionById))
                     .build());
             response.onCompleted();
         } catch (Exception e) {
@@ -91,24 +52,40 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
         }
     }
 
-    public void assigneTimeOfSessionsWithDay(gRPCAssigneTimeOfSessionsWithDayRequest request,
-                                             StreamObserver<gRPCAssigneTimeOfSessionsWithDayResponse> response) {
-        try {
-            cinemaSessionService.assigneTimeOfSessionsWithDay(request.getTimeOfSessionId(), request.getDateOfSessionId());
-            response.onNext(gRPCAssigneTimeOfSessionsWithDayResponse.newBuilder().build());
+
+    public void getSessionsByMovieId(gRPCGetSessionsByMovieIdRequest request, StreamObserver<gRPCGetSessionsByMovieIdResponse> response) {
+        try{
+            Collection<TimeOfSessionEntity> sessions = cinemaSessionService.getSessionsByMovieId(request.getMovieId());
+            response.onNext(gRPCGetSessionsByMovieIdResponse.newBuilder()
+                    .addAllSessions(sessions.stream()
+                            .map(ProtoConvertToEntity::convert)
+                            .collect(Collectors.toList()))
+                    .build());
             response.onCompleted();
-        } catch (Exception e) {
+        }catch (Exception e) {
             onError(response, e);
         }
     }
 
-    public void assignMovieWithSession(gRPCAssignMovieWithSessionRequest request, StreamObserver<gRPCAssignMovieWithSessionResponse> response) {
+    @Override
+    public void deleteSessionById(gRPCDeleteSessionByIdRequest request, StreamObserver<Empty> responseObserver) {
         try {
-            cinemaSessionService.assignMovieWithSession(request.getTimeOfSessionId(), request.getMovieId());
-            response.onNext(gRPCAssignMovieWithSessionResponse.newBuilder().build());
-            response.onCompleted();
+            cinemaSessionService.deleteSessionById(request.getSessionId());
+            responseObserver.onNext(Empty.newBuilder().build());
+            responseObserver.onCompleted();
         } catch (Exception e) {
-            onError(response, e);
+            onError(responseObserver, e);
+        }
+    }
+
+    @Override
+    public void deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest request, StreamObserver<Empty> responseObserver) {
+        try {
+            cinemaSessionService.deleteSessionsByMovieId(request.getMovieId());
+            responseObserver.onNext(Empty.newBuilder().build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            onError(responseObserver, e);
         }
     }
 

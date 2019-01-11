@@ -7,10 +7,5 @@ message GTimeOfSession {
     int64 timeOfSessionId = 1;
     int64 timeOfSessionDate = 2;
     int64 movieId = 3;
-}
-
-message GDateOfSession {
-    int64 dateOfSessionId = 1;
-    int64 dateOfSession = 2;
-    repeated GTimeOfSession timeOfSession = 3;
+    int32 price = 4;
 }

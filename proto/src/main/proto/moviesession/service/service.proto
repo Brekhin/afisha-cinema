@@ -9,17 +9,13 @@ option java_package = "com.brekhin.moviesession.grpc.service";
 
 service MovieSessionService {
 
-    rpc addDateOfSession(gRPCAddDateOfSessionRequest) returns (gRPCAddDateOfSessionResponse);
-
-    rpc getAllDateOfSession(gRPCGetAllDateOfSessionRequest) returns (gRPCGetAllDateOfSessionResponse);
-
     rpc addTimeOfSession(gRPCAddTimeOfSessionRequest) returns (gRPCAddTimeOfSessionResponse);
 
-    rpc getAllSessionByDate(gRPCGetAllSessionByDateRequest) returns (gRPCGetAllSessionByDateResponse);
+    rpc getInfoAboutTimeOfSessionById(gRPCGetInfoTimeOfSessionByIdRequest) returns (gRPCGetInfoTimeOfSessionByIdResponse);
 
-    rpc getInfoAboutTimeOfSessionInSpecificDay(gRPCGetInfoAboutTimeOfSessionInSpecificDayRequest) returns (gRPCGetInfoAboutTimeOfSessionInSpecificDayResponse);
+    rpc getSessionsByMovieId(gRPCGetSessionsByMovieIdRequest) returns (gRPCGetSessionsByMovieIdResponse);
 
-    rpc assigneTimeOfSessionsWithDay(gRPCAssigneTimeOfSessionsWithDayRequest) returns (gRPCAssigneTimeOfSessionsWithDayResponse);
+    rpc deleteSessionById(gRPCDeleteSessionByIdRequest) returns (Empty);
 
-    rpc assignMovieWithSession(gRPCAssignMovieWithSessionRequest) returns (gRPCAssignMovieWithSessionResponse);
+    rpc deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest) returns (Empty);
 }

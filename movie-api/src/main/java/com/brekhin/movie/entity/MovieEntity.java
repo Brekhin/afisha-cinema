@@ -19,12 +19,6 @@ public class MovieEntity {
 
     private String name;
 
-    @Column(name = "rental_start_date")
-    private Timestamp rentalStartDate;
-
-    @Column(name = "rental_end_date")
-    private Timestamp rentalEndDate;
-
     private String genre;
 
     private int duration;
@@ -44,24 +38,6 @@ public class MovieEntity {
 
     public MovieEntity setName(String name) {
         this.name = name;
-        return this;
-    }
-
-    public Timestamp getRentalStartDate() {
-        return rentalStartDate;
-    }
-
-    public MovieEntity setRentalStartDate(Timestamp rentalStartDate) {
-        this.rentalStartDate = rentalStartDate;
-        return this;
-    }
-
-    public Timestamp getRentalEndDate() {
-        return rentalEndDate;
-    }
-
-    public MovieEntity setRentalEndDate(Timestamp rentalEndDate) {
-        this.rentalEndDate = rentalEndDate;
         return this;
     }
 

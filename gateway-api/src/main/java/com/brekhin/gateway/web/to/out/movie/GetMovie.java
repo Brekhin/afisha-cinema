@@ -1,23 +1,23 @@
 package com.brekhin.gateway.web.to.out.movie;
 
+import com.brekhin.gateway.web.to.out.moviesession.InfoTimeOfSessionResponse;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetMovie {
 
-    private Long movieId;
-    private String name;
-    private Timestamp rentalStartDate;
-    private Timestamp rentalEndDate;
-    private String genre;
-    private int duration;
+    private final Long movieId;
+    private final String name;
+    private final String genre;
+    private final int duration;
+    private List<InfoTimeOfSessionResponse> sessions = new ArrayList<>();
 
-    public GetMovie(Long movieId, String name, Timestamp rentalStartDate, Timestamp rentalEndDate, String genre, int duration) {
+    public GetMovie(Long movieId, String name, String genre, int duration) {
         this.movieId = movieId;
         this.name = name;
-        this.rentalStartDate = rentalStartDate;
-        this.rentalEndDate = rentalEndDate;
         this.genre = genre;
         this.duration = duration;
     }
@@ -32,16 +32,6 @@ public class GetMovie {
         return name;
     }
 
-    @JsonGetter("getRentalStartDate")
-    public Timestamp getRentalStartDate() {
-        return rentalStartDate;
-    }
-
-    @JsonGetter("getRentalEndDate")
-    public Timestamp getRentalEndDate() {
-        return rentalEndDate;
-    }
-
     @JsonGetter("genre")
     public String getGenre() {
         return genre;
@@ -50,5 +40,10 @@ public class GetMovie {
     @JsonGetter("duration")
     public int getDuration() {
         return duration;
+    }
+
+    @JsonGetter("sessions")
+    public List<InfoTimeOfSessionResponse> getSessions() {
+        return sessions;
     }
 }

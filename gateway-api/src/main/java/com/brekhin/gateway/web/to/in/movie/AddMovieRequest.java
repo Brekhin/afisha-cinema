@@ -11,24 +11,16 @@ public class AddMovieRequest {
 
     private String name;
 
-    private Timestamp rentalStartDate;
-
-    private Timestamp rentalEndDate;
-
     private String genre;
 
     private int duration;
 
     public AddMovieRequest(@JsonProperty("movieId") Long movieId,
                            @JsonProperty("movieName") String name,
-                           @JsonProperty("rentalStartDate") Timestamp rentalStartDate,
-                           @JsonProperty("rentalEndDate") Timestamp rentalEndDate,
                            @JsonProperty("genre") String genre,
                            @JsonProperty("duration") int duration) {
         this.movieId = movieId;
         this.name = name;
-        this.rentalStartDate = rentalStartDate;
-        this.rentalEndDate = rentalEndDate;
         this.genre = genre;
         this.duration = duration;
     }
@@ -39,14 +31,6 @@ public class AddMovieRequest {
 
     public String getName() {
         return name;
-    }
-
-    public Timestamp getRentalStartDate() {
-        return rentalStartDate;
-    }
-
-    public Timestamp getRentalEndDate() {
-        return rentalEndDate;
     }
 
     public String getGenre() {

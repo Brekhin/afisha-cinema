@@ -16,8 +16,6 @@ public class ProtoConvertToEntity {
         return new MovieEntity()
                 .setMovieId(gMovie.getMovieId())
                 .setName(gMovie.getName())
-                .setRentalStartDate(new java.sql.Timestamp(gMovie.getRentalStartDate()))
-                .setRentalEndDate(new java.sql.Timestamp(gMovie.getRentalEndDate()))
                 .setGenre(gMovie.getGenre())
                 .setDuration(gMovie.getDuration());
     }
@@ -26,8 +24,6 @@ public class ProtoConvertToEntity {
         return GMovie.newBuilder()
                 .setMovieId(movieEntity.getMovieId())
                 .setName(movieEntity.getName())
-                .setRentalStartDate(movieEntity.getRentalStartDate().getTime())
-                .setRentalEndDate(movieEntity.getRentalEndDate().getTime())
                 .setGenre(movieEntity.getGenre())
                 .setDuration(movieEntity.getDuration())
                 .build();

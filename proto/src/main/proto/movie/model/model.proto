@@ -8,8 +8,6 @@ option java_package = "com.brekhin.movie.grpc.model";
 message GMovie {
     int64 movieId = 1;
     string name = 2;
-    int64 rentalStartDate = 3;
-    int64 rentalEndDate = 4;
-    string genre = 5;
-    int32 duration = 6;
+    string genre = 3;
+    int32 duration = 4;
 }

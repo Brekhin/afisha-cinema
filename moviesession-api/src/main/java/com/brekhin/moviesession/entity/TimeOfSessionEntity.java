@@ -1,31 +1,23 @@
 package com.brekhin.moviesession.entity;
 
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "time_of_session", schema = "moviesession_api")
+@Table(name = "time_of_session", schema = "time_of_session")
 public class TimeOfSessionEntity {
+
+    private Long timeOfSessionId;
+    private Timestamp timeOfSessionDate;
+    private Long movieId;
+    private int price;
 
     @Id
     @Column(name = "timeOfSessionId")
-    private Long timeOfSessionId;
-
-    @Column(name = "timeOfSession")
-    private Timestamp timeOfSessionDate;
-
-    private Long movieId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dateOfSessionId")
-    private DateOfSessionEntity dateOfSession;
-
     public Long getTimeOfSessionId() {
         return timeOfSessionId;
     }
@@ -35,7 +27,8 @@ public class TimeOfSessionEntity {
         return this;
     }
 
-    public Timestamp getTimeOfSession() {
+    @Column(name = "timeOfSession")
+    public Timestamp getTimeOfSessionDate() {
         return timeOfSessionDate;
     }
 
@@ -44,7 +37,7 @@ public class TimeOfSessionEntity {
         return this;
     }
 
-
+    @Column(name = "movie_id")
     public Long getMovieId() {
         return movieId;
     }
@@ -54,16 +47,13 @@ public class TimeOfSessionEntity {
         return this;
     }
 
-    public DateOfSessionEntity getDateOfSession() {
-        return dateOfSession;
+    @Column(name = "price")
+    public int getPrice() {
+        return price;
     }
 
-    public TimeOfSessionEntity setDateOfSession(DateOfSessionEntity dateOfSession) {
-        this.dateOfSession = dateOfSession;
+    public TimeOfSessionEntity setPrice(int price) {
+        this.price = price;
         return this;
-    }
-
-    public Timestamp getTimeOfSessionDate() {
-        return timeOfSessionDate;
     }
 }

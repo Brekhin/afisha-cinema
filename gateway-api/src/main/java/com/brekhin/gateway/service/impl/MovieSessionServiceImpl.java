@@ -3,11 +3,11 @@ package com.brekhin.gateway.service.impl;
 import com.brekhin.gateway.converter.MovieSessionConverter;
 import com.brekhin.gateway.grpc.client.GRpcMovieSessionServiceClient;
 import com.brekhin.gateway.service.MovieSessionService;
-import com.brekhin.gateway.web.to.in.moviesession.AddDateOfSessionRequest;
 import com.brekhin.gateway.web.to.in.moviesession.AddTimeOfSessionRequest;
-import com.brekhin.gateway.web.to.out.moviesession.AddDateOfSessionResponse;
-import com.brekhin.gateway.web.to.out.moviesession.AddTimeOfSessionResponse;
-import com.brekhin.moviesession.grpc.model.gRPCGetAllDateOfSessionRequest;
+import com.brekhin.gateway.web.to.out.moviesession.InfoTimeOfSessionResponse;
+import com.brekhin.moviesession.grpc.model.gRPCDeleteAllSessionsByMovieIdRequest;
+import com.brekhin.moviesession.grpc.model.gRPCDeleteSessionByIdRequest;
+import com.brekhin.moviesession.grpc.model.gRPCGetInfoTimeOfSessionByIdRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +27,6 @@ public class MovieSessionServiceImpl implements MovieSessionService {
         this.gRpcMovieSessionServiceClient = gRpcMovieSessionServiceClient;
     }
 
-    @Override
-    public Long addDateOfSession(AddDateOfSessionRequest request) {
-        MovieSessionConverter.convert(request).getDateOfSession().getTimeOfSessionList().stream()
-        .forEach(e->log.warn(e.toString()));
-
-        return gRpcMovieSessionServiceClient.addDateOfSession(MovieSessionConverter.convert(request)).getDateOfSessionId();
-    }
-
-    @Override
-    public List<AddDateOfSessionRequest> getAllDateOfSession() {
-        return gRpcMovieSessionServiceClient.getAllDateOfSession(gRPCGetAllDateOfSessionRequest.newBuilder().build())
-                .getDateOfSessionList().stream()
-                .map(MovieSessionConverter::convert)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public Long addTimeOfSession(AddTimeOfSessionRequest request) {
@@ -49,22 +34,37 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
-    public AddDateOfSessionResponse getAllSessionByDate(Long dateOfSessionId) {
-        return null;
+    public InfoTimeOfSessionResponse getInfoTimeOfSessionById(Long timeOfSessionId) {
+        return MovieSessionConverter.convert(
+                gRpcMovieSessionServiceClient.getInfoTimeOfSessionById(
+                        gRPCGetInfoTimeOfSessionByIdRequest.newBuilder()
+                                .setTimeOfSessionId(timeOfSessionId)
+                                .build())
+                        .getTimeOfSessions());
     }
 
     @Override
-    public AddTimeOfSessionResponse getInfoAboutTimeOfSessionInSpecificDay(Long timeOfSessionId, Long dateOfSessionId) {
-        return null;
+    public List<InfoTimeOfSessionResponse> getSessionsByMovieId(Long movieId) {
+        return gRpcMovieSessionServiceClient.getSessionsByMovieId(MovieSessionConverter.convert(movieId))
+                .getSessionsList()
+                .stream()
+                .map(MovieSessionConverter::convert)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void assigneTimeOfSessionsWithDay(Long timeOfSessionId, Long dateOfSessionId) {
-
+    public void deleteSessionById(Long id) {
+        gRpcMovieSessionServiceClient.deletSessionById(gRPCDeleteSessionByIdRequest.newBuilder()
+                .setSessionId(id)
+                .build());
     }
 
     @Override
-    public void assignMovieWithSession(Long timeOfSessionId, Long movieId) {
-
+    public void deleteAllSessionsByMovieId(Long movieId) {
+        gRpcMovieSessionServiceClient.deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest.newBuilder()
+                .setMovieId(movieId)
+                .build());
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.brekhin.gateway.grpc.client;
 
 import com.brekhin.movie.grpc.Empty;
+import com.brekhin.movie.grpc.model.gRPCAssignMovieWithSessionRequest;
 import com.brekhin.movie.grpc.service.MovieServiceGrpc;
 import com.brekhin.moviesession.grpc.model.*;
 import com.brekhin.moviesession.grpc.service.MovieSessionServiceGrpc;
@@ -31,31 +32,25 @@ public class GRpcMovieSessionServiceClient {
         movieSessionServiceBlockingStub = MovieSessionServiceGrpc.newBlockingStub(managedChannel);
     }
 
-    public gRPCAddDateOfSessionResponse addDateOfSession(gRPCAddDateOfSessionRequest request) {
-        return movieSessionServiceBlockingStub.addDateOfSession(request);
-    }
-
-    public gRPCGetAllDateOfSessionResponse getAllDateOfSession(gRPCGetAllDateOfSessionRequest request) {
-        return movieSessionServiceBlockingStub.getAllDateOfSession(request);
-    }
-
     public gRPCAddTimeOfSessionResponse addTimeOfSession(gRPCAddTimeOfSessionRequest request) {
         return movieSessionServiceBlockingStub.addTimeOfSession(request);
     }
 
-    public gRPCGetAllSessionByDateResponse getAllSessionByDate(gRPCGetAllSessionByDateRequest request) {
-        return movieSessionServiceBlockingStub.getAllSessionByDate(request);
+    public gRPCGetInfoTimeOfSessionByIdResponse getInfoTimeOfSessionById(gRPCGetInfoTimeOfSessionByIdRequest request) {
+        return movieSessionServiceBlockingStub.getInfoAboutTimeOfSessionById(request);
     }
 
-    public gRPCGetInfoAboutTimeOfSessionInSpecificDayResponse getInfoAboutTimeOfSessionInSpecificDay(gRPCGetInfoAboutTimeOfSessionInSpecificDayRequest request) {
-        return movieSessionServiceBlockingStub.getInfoAboutTimeOfSessionInSpecificDay(request);
+    public gRPCGetSessionsByMovieIdResponse getSessionsByMovieId(gRPCGetSessionsByMovieIdRequest request) {
+        return movieSessionServiceBlockingStub.getSessionsByMovieId(request);
     }
 
-    public gRPCAssigneTimeOfSessionsWithDayResponse assigneTimeOfSessionsWithDay(gRPCAssigneTimeOfSessionsWithDayRequest request) {
-        return movieSessionServiceBlockingStub.assigneTimeOfSessionsWithDay(request);
+    public Empty deletSessionById(gRPCDeleteSessionByIdRequest request){
+        return movieSessionServiceBlockingStub.deleteSessionById(request);
     }
 
-    public gRPCAssignMovieWithSessionResponse assignMovieWithSession(gRPCAssignMovieWithSessionRequest request) {
-        return movieSessionServiceBlockingStub.assignMovieWithSession(request);
+    public Empty deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest request){
+        return movieSessionServiceBlockingStub.deleteAllSessionsByMovieId(request);
     }
+
+
 }

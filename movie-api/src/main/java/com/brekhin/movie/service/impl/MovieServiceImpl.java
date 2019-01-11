@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +36,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    @Transactional
     public MovieEntity getMovie(Long movieId) {
         LOGGER.info("REQUEST ID : {} ", movieId.toString());
         return movieRepository.findById(movieId)
@@ -49,4 +51,18 @@ public class MovieServiceImpl implements MovieService {
         LOGGER.info("delete movie with id = {}", movieId);
         movieRepository.deleteById(movieId);
     }
+
+    //    @Override
+//    public void assignMovieWithSession(Long timeOfSessionId, Long movieId) {
+//        TimeOfSessionEntity timeOfSessionEntity = timeOfSessionRepository
+//                .findById(timeOfSessionId)
+//                .orElseThrow(() ->
+//                    new NotFoundSessionException(
+//                            String.format("Not found TimeOfSession with id = %s",
+//                                    timeOfSessionId.toString()))
+//                );
+//
+//        timeOfSessionEntity.setMovieId(movieId);
+//        timeOfSessionRepository.save(timeOfSessionEntity);
+//    }
 }
