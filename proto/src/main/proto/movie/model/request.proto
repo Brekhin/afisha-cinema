@@ -19,7 +19,7 @@ message gRPCRemoveMovieRequest {
 }
 
 message gRPCGetAllMoviesRequest {
-
+    GPageable pageable = 1;
 }
 
 message gRPCAssignMovieWithSessionRequest {

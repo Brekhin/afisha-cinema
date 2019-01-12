@@ -3,6 +3,9 @@ package com.brekhin.movie.converter;
 import com.brekhin.movie.entity.MovieEntity;
 import com.brekhin.movie.grpc.GUuid;
 import com.brekhin.movie.grpc.model.GMovie;
+import com.brekhin.movie.grpc.model.GPageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 public class ProtoConvertToEntity {
 
@@ -10,6 +13,10 @@ public class ProtoConvertToEntity {
         return GUuid.newBuilder()
                 .setUuid(String.valueOf(uuid))
                 .build();
+    }
+
+    public static Pageable convert(GPageable gPageable){
+        return PageRequest.of(gPageable.getPage(), gPageable.getSize());
     }
 
     public static MovieEntity convert(GMovie gMovie) {

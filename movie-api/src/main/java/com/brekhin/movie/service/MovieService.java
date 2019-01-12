@@ -1,13 +1,13 @@
 package com.brekhin.movie.service;
 
 import com.brekhin.movie.entity.MovieEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-import java.util.UUID;
 
 public interface MovieService {
 
-    List<MovieEntity> getAllMovies();
+    Page<MovieEntity> getAllMovies(Pageable pageable);
 
     Long addMovie(MovieEntity movieEntity);
 

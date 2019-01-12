@@ -12,5 +12,5 @@ public interface MovieService {
 
     void removeMovieById(Long movieId);
 
-    List<GetMovie> getAllMovies();
+    List<GetMovie> getAllMovies(int page, int size);
 }

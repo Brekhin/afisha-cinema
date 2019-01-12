@@ -55,8 +55,11 @@ public class MovieController {
     }
 
     @RequestMapping(path = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<GetMovie>> getAllMovies() {
-        return ResponseEntity.ok(movieService.getAllMovies());
+    public ResponseEntity<List<GetMovie>> getAllMovies(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size
+    ) {
+        return ResponseEntity.ok(movieService.getAllMovies(page, size));
     }
 
 }

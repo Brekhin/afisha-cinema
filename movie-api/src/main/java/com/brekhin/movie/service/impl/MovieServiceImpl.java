@@ -7,11 +7,11 @@ import com.brekhin.movie.service.MovieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -26,8 +26,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<MovieEntity> getAllMovies() {
-        return movieRepository.findAll();
+    public Page<MovieEntity> getAllMovies(Pageable pageable) {
+        return movieRepository.findAll(pageable);
     }
 
     @Override
@@ -51,18 +51,4 @@ public class MovieServiceImpl implements MovieService {
         LOGGER.info("delete movie with id = {}", movieId);
         movieRepository.deleteById(movieId);
     }
-
-    //    @Override
-//    public void assignMovieWithSession(Long timeOfSessionId, Long movieId) {
-//        TimeOfSessionEntity timeOfSessionEntity = timeOfSessionRepository
-//                .findById(timeOfSessionId)
-//                .orElseThrow(() ->
-//                    new NotFoundSessionException(
-//                            String.format("Not found TimeOfSession with id = %s",
-//                                    timeOfSessionId.toString()))
-//                );
-//
-//        timeOfSessionEntity.setMovieId(movieId);
-//        timeOfSessionRepository.save(timeOfSessionEntity);
-//    }
 }

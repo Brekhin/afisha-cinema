@@ -12,6 +12,8 @@ import org.lognet.springboot.grpc.GRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.UUID;
@@ -32,7 +34,7 @@ public class MovieServiceGrpcImpl extends MovieServiceGrpc.MovieServiceImplBase 
     @Override
     public void getAllMovies(gRPCGetAllMoviesRequest request, StreamObserver<gRPCGetAllMoviesResponse> responseObserver) {
         try {
-            List<MovieEntity> allMovies = movieService.getAllMovies();
+            Page<MovieEntity> allMovies = movieService.getAllMovies(ProtoConvertToEntity.convert(request.getPageable()));
             responseObserver.onNext(gRPCGetAllMoviesResponse.newBuilder().
                     addAllMovies(allMovies
                             .stream()

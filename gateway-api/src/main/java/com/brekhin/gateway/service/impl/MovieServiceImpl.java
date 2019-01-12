@@ -70,8 +70,10 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<GetMovie> getAllMovies() {
-        return rpcMovieServiceClient.getAllMovies(gRPCGetAllMoviesRequest.newBuilder().build())
+    public List<GetMovie> getAllMovies(int page, int size) {
+        return rpcMovieServiceClient.getAllMovies(gRPCGetAllMoviesRequest.newBuilder()
+                .setPageable(MovieConverter.convert(page, size))
+                .build())
                 .getMoviesList()
                     .stream()
                     .map(MovieConverter::convert)
