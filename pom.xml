@@ -25,5 +25,7 @@
 		<module>movie-api</module>
 		<module>moviesession-api</module>
         <module>gateway-api</module>
+        <module>cinemahall-api</module>
+        <module>ticket-api</module>
     </modules>
 </project>

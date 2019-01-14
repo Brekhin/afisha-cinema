@@ -8,4 +8,11 @@ message GTimeOfSession {
     int64 timeOfSessionDate = 2;
     int64 movieId = 3;
     int32 price = 4;
+    int64 hallId = 5;
+}
+
+message GCinemaHall {
+    int64 hallId = 1;
+    string name = 2;
+    int32 seatCount = 3;
 }

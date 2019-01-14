@@ -44,13 +44,35 @@ public class GRpcMovieSessionServiceClient {
         return movieSessionServiceBlockingStub.getSessionsByMovieId(request);
     }
 
-    public Empty deletSessionById(gRPCDeleteSessionByIdRequest request){
+    public Empty deletSessionById(gRPCDeleteSessionByIdRequest request) {
         return movieSessionServiceBlockingStub.deleteSessionById(request);
     }
 
-    public Empty deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest request){
+    public Empty deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest request) {
         return movieSessionServiceBlockingStub.deleteAllSessionsByMovieId(request);
     }
 
+    public gRPCGetAllCinemaHallResponse getAllCinemaHall(gRPCGetAllCinemaHallRequest request) {
+        return movieSessionServiceBlockingStub.getAllCinemaHall(request);
+    }
 
+
+    public gRPCAddCinemaHallResponse addCinemaHall(gRPCAddCinemaHallRequest request) {
+        return movieSessionServiceBlockingStub.addCinemaHall(request);
+    }
+
+
+    public gRPCDeleteCinemaHallByIdResponse deleteCinemaHallById(gRPCDeleteCinemaHallByIdRequest request) {
+        return movieSessionServiceBlockingStub.deleteCinemaHallById(request);
+    }
+
+
+    public gRPCGetCinemaHallByIdResponse getCinemaHallById(gRPCGetCinemaHallByIdRequest request) {
+        return movieSessionServiceBlockingStub.getCinemaHallById(request);
+    }
+
+
+    public Empty assignHallAndSession(gRPCAssignHallAndSessionRequest request) {
+        return movieSessionServiceBlockingStub.assignHallAndSession(request);
+    }
 }

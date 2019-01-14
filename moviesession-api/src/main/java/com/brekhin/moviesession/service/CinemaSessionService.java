@@ -16,4 +16,6 @@ public interface CinemaSessionService {
     void deleteSessionById(Long sessionId);
 
     void deleteSessionsByMovieId(Long movieId);
+
+    void assignHallAndSession(Long hallId, Long sessionId);
 }

@@ -28,3 +28,25 @@ message gRPCDeleteAllSessionsByMovieIdRequest {
     int64 movieId = 1;
 }
 
+message gRPCGetAllCinemaHallRequest{
+
+}
+
+message gRPCAddCinemaHallRequest {
+    GCinemaHall cinemaHall = 1;
+}
+
+message gRPCDeleteCinemaHallByIdRequest {
+    int64 hallId = 1;
+}
+
+message gRPCGetCinemaHallByIdRequest {
+    int64 hallId = 1;
+}
+
+message gRPCAssignHallAndSessionRequest {
+    int64 hallId = 1;
+    int64 sessionId = 2;
+}
+
+

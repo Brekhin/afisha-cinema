@@ -22,3 +22,19 @@ message gRPCGetSessionsByMovieIdResponse {
     repeated GTimeOfSession sessions = 1;
 }
 
+message gRPCGetAllCinemaHallResponse{
+    repeated GCinemaHall gCinemaHall = 1;
+}
+
+message gRPCAddCinemaHallResponse {
+    int64 hallId = 1;
+}
+
+message gRPCDeleteCinemaHallByIdResponse {
+    int64 hallId = 1;
+}
+
+message gRPCGetCinemaHallByIdResponse {
+    GCinemaHall gCinemaHall = 1;
+}
+

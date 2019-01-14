@@ -50,4 +50,14 @@ public class CinemaSessionServiceImpl implements CinemaSessionService {
     public void deleteSessionsByMovieId(Long movieId) {
         timeOfSessionRepository.deleteAllByMovieId(movieId);
     }
+
+    @Override
+    public void assignHallAndSession(Long hallId, Long sessionId) {
+        Optional<TimeOfSessionEntity> timeOfSession = timeOfSessionRepository.findById(sessionId);
+        if(timeOfSession.isPresent()){
+            timeOfSession.get().setHallId(hallId);
+            timeOfSessionRepository.save(timeOfSession.get());
+        }
+
+    }
 }

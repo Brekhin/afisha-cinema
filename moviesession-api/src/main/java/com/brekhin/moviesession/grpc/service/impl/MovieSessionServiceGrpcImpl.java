@@ -2,10 +2,12 @@ package com.brekhin.moviesession.grpc.service.impl;
 
 import com.brekhin.movie.grpc.Empty;
 import com.brekhin.moviesession.converter.ProtoConvertToEntity;
+import com.brekhin.moviesession.entity.CinemaHallEntity;
 import com.brekhin.moviesession.entity.TimeOfSessionEntity;
 import com.brekhin.moviesession.exception.NotFoundSessionException;
 import com.brekhin.moviesession.grpc.model.*;
 import com.brekhin.moviesession.grpc.service.MovieSessionServiceGrpc;
+import com.brekhin.moviesession.service.CinemaHallService;
 import com.brekhin.moviesession.service.CinemaSessionService;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
@@ -23,10 +25,13 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
 
     private final static Logger log = LoggerFactory.getLogger(MovieSessionServiceGrpcImpl.class);
     private final CinemaSessionService cinemaSessionService;
+    private final CinemaHallService cinemaHallService;
 
     @Autowired
-    public MovieSessionServiceGrpcImpl(CinemaSessionService cinemaSessionService) {
+    public MovieSessionServiceGrpcImpl(CinemaSessionService cinemaSessionService,
+                                       CinemaHallService cinemaHallService) {
         this.cinemaSessionService = cinemaSessionService;
+        this.cinemaHallService = cinemaHallService;
     }
 
     public void addTimeOfSession(gRPCAddTimeOfSessionRequest request, StreamObserver<gRPCAddTimeOfSessionResponse> response) {
@@ -54,7 +59,7 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
 
 
     public void getSessionsByMovieId(gRPCGetSessionsByMovieIdRequest request, StreamObserver<gRPCGetSessionsByMovieIdResponse> response) {
-        try{
+        try {
             Collection<TimeOfSessionEntity> sessions = cinemaSessionService.getSessionsByMovieId(request.getMovieId());
             response.onNext(gRPCGetSessionsByMovieIdResponse.newBuilder()
                     .addAllSessions(sessions.stream()
@@ -62,7 +67,7 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
                             .collect(Collectors.toList()))
                     .build());
             response.onCompleted();
-        }catch (Exception e) {
+        } catch (Exception e) {
             onError(response, e);
         }
     }
@@ -82,6 +87,71 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
     public void deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest request, StreamObserver<Empty> responseObserver) {
         try {
             cinemaSessionService.deleteSessionsByMovieId(request.getMovieId());
+            responseObserver.onNext(Empty.newBuilder().build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            onError(responseObserver, e);
+        }
+    }
+
+    @Override
+    public void getAllCinemaHall(gRPCGetAllCinemaHallRequest request, StreamObserver<gRPCGetAllCinemaHallResponse> responseObserver) {
+        try {
+            List<CinemaHallEntity> allCinemaHall = cinemaHallService.getAllCinemaHall();
+            responseObserver.onNext(gRPCGetAllCinemaHallResponse.newBuilder()
+                    .addAllGCinemaHall(allCinemaHall.stream()
+                            .map(ProtoConvertToEntity::convert)
+                            .collect(Collectors.toList()))
+                    .build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            onError(responseObserver, e);
+        }
+    }
+
+    @Override
+    public void addCinemaHall(gRPCAddCinemaHallRequest request, StreamObserver<gRPCAddCinemaHallResponse> responseObserver) {
+        try {
+            Long id = cinemaHallService.addCinemaHall(ProtoConvertToEntity.convert(request.getCinemaHall()));
+            responseObserver.onNext(gRPCAddCinemaHallResponse.newBuilder()
+                    .setHallId(id)
+                    .build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            onError(responseObserver, e);
+        }
+    }
+
+    @Override
+    public void deleteCinemaHallById(gRPCDeleteCinemaHallByIdRequest request, StreamObserver<gRPCDeleteCinemaHallByIdResponse> responseObserver) {
+        try {
+            Long id = cinemaHallService.deleteCinemaHallById(request.getHallId());
+            responseObserver.onNext(gRPCDeleteCinemaHallByIdResponse.newBuilder()
+                    .setHallId(id)
+                    .build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            onError(responseObserver, e);
+        }
+    }
+
+    @Override
+    public void getCinemaHallById(gRPCGetCinemaHallByIdRequest request, StreamObserver<gRPCGetCinemaHallByIdResponse> responseObserver) {
+        try {
+            CinemaHallEntity cinemaHall = cinemaHallService.getCinemaHallById(request.getHallId());
+            responseObserver.onNext(gRPCGetCinemaHallByIdResponse.newBuilder()
+                    .setGCinemaHall(ProtoConvertToEntity.convert(cinemaHall))
+                    .build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            onError(responseObserver, e);
+        }
+    }
+
+    @Override
+    public void assignHallAndSession(gRPCAssignHallAndSessionRequest request, StreamObserver<Empty> responseObserver) {
+        try {
+            cinemaSessionService.assignHallAndSession(request.getHallId(), request.getSessionId());
             responseObserver.onNext(Empty.newBuilder().build());
             responseObserver.onCompleted();
         } catch (Exception e) {

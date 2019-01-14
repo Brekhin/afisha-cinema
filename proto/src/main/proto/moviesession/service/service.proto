@@ -18,4 +18,15 @@ service MovieSessionService {
     rpc deleteSessionById(gRPCDeleteSessionByIdRequest) returns (Empty);
 
     rpc deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest) returns (Empty);
+
+    rpc getAllCinemaHall(gRPCGetAllCinemaHallRequest) returns (gRPCGetAllCinemaHallResponse);
+
+    rpc addCinemaHall(gRPCAddCinemaHallRequest) returns (gRPCAddCinemaHallResponse);
+
+    rpc deleteCinemaHallById(gRPCDeleteCinemaHallByIdRequest) returns (gRPCDeleteCinemaHallByIdResponse);
+
+    rpc getCinemaHallById(gRPCGetCinemaHallByIdRequest) returns(gRPCGetCinemaHallByIdResponse);
+
+    rpc assignHallAndSession(gRPCAssignHallAndSessionRequest) returns (Empty);
+
 }

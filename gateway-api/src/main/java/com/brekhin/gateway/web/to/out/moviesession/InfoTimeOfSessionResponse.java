@@ -9,15 +9,21 @@ public class InfoTimeOfSessionResponse {
 
     private final Long timeOfSessionId;
     private final Timestamp timeOfSessionDate;
+    private final Long movieId;
     private final int price;
+    private final Long hallId;
 
     public InfoTimeOfSessionResponse(
             Long timeOfSessionId,
             Timestamp timeOfSessionDate,
-            int price) {
+            Long movieId,
+            int price,
+            Long hallId) {
         this.timeOfSessionId = timeOfSessionId;
         this.timeOfSessionDate = timeOfSessionDate;
+        this.movieId = movieId;
         this.price = price;
+        this.hallId = hallId;
     }
 
     @JsonGetter("timeOfSessionId")
@@ -33,5 +39,15 @@ public class InfoTimeOfSessionResponse {
     @JsonGetter("price")
     public int getPrice() {
         return price;
+    }
+
+    @JsonGetter("movieId")
+    public Long getMovieId() {
+        return movieId;
+    }
+
+    @JsonGetter("hallId")
+    public Long getHallId() {
+        return hallId;
     }
 }

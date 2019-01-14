@@ -15,6 +15,7 @@ public class TimeOfSessionEntity {
     private Timestamp timeOfSessionDate;
     private Long movieId;
     private int price;
+    private Long hallId;
 
     @Id
     @Column(name = "timeOfSessionId")
@@ -54,6 +55,16 @@ public class TimeOfSessionEntity {
 
     public TimeOfSessionEntity setPrice(int price) {
         this.price = price;
+        return this;
+    }
+
+    @Column(name = "hallId")
+    public Long getHallId() {
+        return hallId;
+    }
+
+    public TimeOfSessionEntity setHallId(Long hallId) {
+        this.hallId = hallId;
         return this;
     }
 }

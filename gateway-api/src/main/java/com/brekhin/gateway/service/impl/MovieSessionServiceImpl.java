@@ -4,10 +4,9 @@ import com.brekhin.gateway.converter.MovieSessionConverter;
 import com.brekhin.gateway.grpc.client.GRpcMovieSessionServiceClient;
 import com.brekhin.gateway.service.MovieSessionService;
 import com.brekhin.gateway.web.to.in.moviesession.AddTimeOfSessionRequest;
+import com.brekhin.gateway.web.to.out.moviesession.CinemaHallTO;
 import com.brekhin.gateway.web.to.out.moviesession.InfoTimeOfSessionResponse;
-import com.brekhin.moviesession.grpc.model.gRPCDeleteAllSessionsByMovieIdRequest;
-import com.brekhin.moviesession.grpc.model.gRPCDeleteSessionByIdRequest;
-import com.brekhin.moviesession.grpc.model.gRPCGetInfoTimeOfSessionByIdRequest;
+import com.brekhin.moviesession.grpc.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +63,47 @@ public class MovieSessionServiceImpl implements MovieSessionService {
         gRpcMovieSessionServiceClient.deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest.newBuilder()
                 .setMovieId(movieId)
                 .build());
+    }
+
+    @Override
+    public void assignHallAndSession(Long hallId, Long sessionId) {
+        gRpcMovieSessionServiceClient.assignHallAndSession(gRPCAssignHallAndSessionRequest.newBuilder()
+                .setHallId(hallId)
+                .setSessionId(sessionId)
+                .build());
+    }
+
+    @Override
+    public List<CinemaHallTO> getAllCinemaHall() {
+        return gRpcMovieSessionServiceClient.getAllCinemaHall(gRPCGetAllCinemaHallRequest.newBuilder().build())
+                .getGCinemaHallList()
+                .stream()
+                .map(MovieSessionConverter::convert)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Long addCinemaHall(CinemaHallTO cinemaHall) {
+        return gRpcMovieSessionServiceClient.addCinemaHall(gRPCAddCinemaHallRequest.newBuilder()
+                .setCinemaHall(MovieSessionConverter.convert(cinemaHall))
+                .build())
+                .getHallId();
+    }
+
+    @Override
+    public Long deleteCinemaHallById(Long id) {
+        return gRpcMovieSessionServiceClient.deleteCinemaHallById(gRPCDeleteCinemaHallByIdRequest.newBuilder()
+                .setHallId(id)
+                .build())
+                .getHallId();
+    }
+
+    @Override
+    public CinemaHallTO getCinemaHallById(Long id) {
+        return MovieSessionConverter.convert(gRpcMovieSessionServiceClient.getCinemaHallById(gRPCGetCinemaHallByIdRequest.newBuilder()
+                .setHallId(id)
+                .build())
+                .getGCinemaHall());
     }
 
 
