@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+import "ticket/model/model.proto";
+
+option java_multiple_files = true;
+option java_package = "com.brekhin.ticket.grpc.model";
+
+message gRPCAddTicketResponse{
+    int64 ticketId = 1;
+}
+
+message gRPCDeleteTicketByIdResponse{
+    int64 ticketId = 1;
+}
+
+message gRPCGetTicketByIdResponse{
+    GTicket gTicket = 1;
+}

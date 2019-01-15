@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "ticket/model/request.proto";
+import "ticket/model/response.proto";
+
+option java_multiple_files = true;
+option java_package = "com.brekhin.grpc.service.impl";
+
+service TicketService{
+
+    rpc addTicket(gRPCAddTicketRequest) returns (gRPCAddTicketResponse);
+
+    rpc deleteTicketById(gRPCDeleteTicketByIdRequest) returns (gRPCDeleteTicketByIdResponse);
+
+    rpc getTicketById(gRPCGetTicketByIdRequest) returns (gRPCGetTicketByIdResponse);
+
+}
