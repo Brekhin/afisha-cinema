@@ -1,0 +1,8 @@
+G:\afisha-cinema\ticket-api\src\main\java\com\brekhin\ticket\converter\ConvertProtoAndJavaObject.java
+G:\afisha-cinema\ticket-api\src\main\java\com\brekhin\ticket\repository\TicketRepository.java
+G:\afisha-cinema\ticket-api\src\main\java\com\brekhin\ticket\service\impl\TiketServiceImpl.java
+G:\afisha-cinema\ticket-api\src\main\java\com\brekhin\ticket\exception\NotFoundTicketException.java
+G:\afisha-cinema\ticket-api\src\main\java\com\brekhin\ticket\TicketApiApplication.java
+G:\afisha-cinema\ticket-api\src\main\java\com\brekhin\ticket\entity\TicketEntity.java
+G:\afisha-cinema\ticket-api\src\main\java\com\brekhin\ticket\grpc\service\impl\TicketServiceGrpcImpl.java
+G:\afisha-cinema\ticket-api\src\main\java\com\brekhin\ticket\service\TicketService.java

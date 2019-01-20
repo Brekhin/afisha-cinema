@@ -16,3 +16,6 @@ gateway:
     MovieSessionServiceGrpc:
       host: localhost
       port: 6568
+    TicketServiceGrpc:
+      host: localhost
+      port: 6569

@@ -44,19 +44,18 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
         }
     }
 
-    public void getTimeOfSessionById(gRPCGetInfoTimeOfSessionByIdRequest request,
-                                     StreamObserver<gRPCGetInfoTimeOfSessionByIdResponse> response) {
+    @Override
+    public void getInfoAboutTimeOfSessionById(gRPCGetInfoTimeOfSessionByIdRequest request, StreamObserver<gRPCGetInfoTimeOfSessionByIdResponse> responseObserver) {
         try {
             TimeOfSessionEntity getTimeOfSessionById = cinemaSessionService.getTimeOfSessionById(request.getTimeOfSessionId());
-            response.onNext(gRPCGetInfoTimeOfSessionByIdResponse.newBuilder()
+            responseObserver.onNext(gRPCGetInfoTimeOfSessionByIdResponse.newBuilder()
                     .setTimeOfSessions(ProtoConvertToEntity.convert(getTimeOfSessionById))
                     .build());
-            response.onCompleted();
+            responseObserver.onCompleted();
         } catch (Exception e) {
-            onError(response, e);
+            onError(responseObserver, e);
         }
     }
-
 
     public void getSessionsByMovieId(gRPCGetSessionsByMovieIdRequest request, StreamObserver<gRPCGetSessionsByMovieIdResponse> response) {
         try {

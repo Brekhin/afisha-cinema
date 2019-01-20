@@ -16,3 +16,7 @@ message gRPCDeleteTicketByIdRequest{
 message gRPCGetTicketByIdRequest{
     int64 ticketId = 1;
 }
+
+message gRPCDeleteTicketsBySessionIdRequest{
+    int64 sessionId = 1;
+}

@@ -80,7 +80,6 @@ public class MovieServiceGrpcImplTest {
 
         gRPCAddMovieResponse response = captor.getValue();
         assertEquals(java.util.Optional.ofNullable(response.getMovieId()).get(), MOVIE_ID);
-
     }
 
 

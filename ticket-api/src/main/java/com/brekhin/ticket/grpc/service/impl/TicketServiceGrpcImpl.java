@@ -1,6 +1,7 @@
 package com.brekhin.ticket.grpc.service.impl;
 
 import com.brekhin.grpc.service.impl.TicketServiceGrpc;
+import com.brekhin.movie.grpc.Empty;
 import com.brekhin.ticket.converter.ConvertProtoAndJavaObject;
 import com.brekhin.ticket.entity.TicketEntity;
 import com.brekhin.ticket.grpc.model.*;
@@ -36,7 +37,7 @@ public class TicketServiceGrpcImpl extends TicketServiceGrpc.TicketServiceImplBa
     @Override
     public void deleteTicketById(gRPCDeleteTicketByIdRequest request, StreamObserver<gRPCDeleteTicketByIdResponse> responseObserver) {
         try {
-            Long id = ticketService.deleteTicketBuId(request.getTicketId());
+            Long id = ticketService.deleteTicketById(request.getTicketId());
             responseObserver.onNext(gRPCDeleteTicketByIdResponse.newBuilder()
                     .setTicketId(id)
                     .build());
@@ -53,6 +54,17 @@ public class TicketServiceGrpcImpl extends TicketServiceGrpc.TicketServiceImplBa
             responseObserver.onNext(gRPCGetTicketByIdResponse.newBuilder()
                     .setGTicket(ConvertProtoAndJavaObject.convert(ticket))
                     .build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteTicketsBySessionId(gRPCDeleteTicketsBySessionIdRequest request, StreamObserver<Empty> responseObserver) {
+        try {
+            ticketService.deleteTicketsBySessionId(request.getSessionId());
+            responseObserver.onNext(Empty.newBuilder().build());
             responseObserver.onCompleted();
         } catch (Exception e) {
             e.printStackTrace();

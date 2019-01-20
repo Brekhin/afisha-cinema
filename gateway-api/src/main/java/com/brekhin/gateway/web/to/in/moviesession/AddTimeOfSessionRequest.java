@@ -20,7 +20,6 @@ public class AddTimeOfSessionRequest {
             @JsonProperty("movieId") Long movieId,
             @JsonProperty("price") int price,
             @JsonProperty("hallId") Long hallId) {
-
         this.timeOfSessionId = timeOfSessionId;
         this.timeOfSessionDate = timeOfSessionDate;
         this.movieId = movieId;

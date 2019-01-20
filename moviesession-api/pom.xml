@@ -11,9 +11,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-
-
-
     <properties>
         <grpc-spring-boot-starter.version>2.3.2</grpc-spring-boot-starter.version>
         <os-maven-plugin.version>1.6.0</os-maven-plugin.version>

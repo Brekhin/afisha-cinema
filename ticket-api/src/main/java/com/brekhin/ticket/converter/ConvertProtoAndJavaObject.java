@@ -17,8 +17,8 @@ public class ConvertProtoAndJavaObject {
     public static TicketEntity convert(GTicket gTicket) {
         return new TicketEntity()
                 .setTicketId(gTicket.getTicketId())
+                .setSessionId(gTicket.getSessionId())
                 .setCol(gTicket.getCol())
-                .setRow(gTicket.getRow())
-                .setSessionId(gTicket.getSessionId());
+                .setRow(gTicket.getRow());
     }
 }

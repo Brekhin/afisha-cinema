@@ -1,6 +1,7 @@
 package com.brekhin.gateway.service;
 
 import com.brekhin.gateway.web.to.in.moviesession.AddTimeOfSessionRequest;
+import com.brekhin.gateway.web.to.in.ticket.TicketBuildStep1;
 import com.brekhin.gateway.web.to.out.moviesession.CinemaHallTO;
 import com.brekhin.gateway.web.to.out.moviesession.InfoTimeOfSessionResponse;
 
@@ -10,15 +11,13 @@ public interface MovieSessionService {
 
     Long addTimeOfSession(AddTimeOfSessionRequest request);
 
-    InfoTimeOfSessionResponse getInfoTimeOfSessionById(Long timeOfSessionId);
-
     List<InfoTimeOfSessionResponse> getSessionsByMovieId(Long movieId);
+
+    TicketBuildStep1 getInfoTimeOfSessionById(Long timeOfSessionId);
 
     void deleteSessionById(Long id);
 
     void deleteAllSessionsByMovieId(Long movieId);
-
-    void assignHallAndSession(Long hallId, Long sessionId);
 
     List<CinemaHallTO> getAllCinemaHall();
 

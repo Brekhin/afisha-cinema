@@ -22,8 +22,6 @@ import java.util.List;
 @RequestMapping(path = "/api/movies", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class MovieController {
 
-    Logger log = LoggerFactory.getLogger(MovieController.class);
-
     private final MovieService movieService;
     private final MovieSessionService movieSessionService;
 
@@ -37,7 +35,6 @@ public class MovieController {
     public ResponseEntity<AddMovie> addMovie(@RequestBody @Valid AddMovieRequest request) {
         return ResponseEntity.ok(new AddMovie(movieService.addMovie(request)));
     }
-
 
     @RequestMapping(path = "/{movieId}", method = RequestMethod.GET)
     public ResponseEntity<GetMovie> getMovie(@PathVariable Long movieId){
@@ -56,8 +53,8 @@ public class MovieController {
 
     @RequestMapping(path = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<GetMovie>> getAllMovies(
-            @RequestParam("page") int page,
-            @RequestParam("size") int size
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size
     ) {
         return ResponseEntity.ok(movieService.getAllMovies(page, size));
     }

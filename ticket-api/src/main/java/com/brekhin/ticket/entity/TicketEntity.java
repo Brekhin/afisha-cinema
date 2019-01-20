@@ -1,9 +1,6 @@
 package com.brekhin.ticket.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tickets", schema = "ticket_api")
