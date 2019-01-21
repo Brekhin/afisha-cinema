@@ -9,7 +9,7 @@ option java_package = "com.brekhin.moviesession.grpc.service";
 
 service MovieSessionService {
 
-    rpc addTimeOfSession(GRpcAddSessionRequest) returns (GRpcAddSessionResponse);
+    rpc addSession(GRpcAddSessionRequest) returns (GRpcAddSessionResponse);
 
     rpc getInfoAboutSessionById(GRpcGetInfoAboutSessionByIdRequest) returns (GRpcGetInfoAboutSessionByIdResponse);
 
