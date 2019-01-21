@@ -9,24 +9,24 @@ option java_package = "com.brekhin.moviesession.grpc.service";
 
 service MovieSessionService {
 
-    rpc addTimeOfSession(gRPCAddTimeOfSessionRequest) returns (gRPCAddTimeOfSessionResponse);
+    rpc addTimeOfSession(GRpcAddSessionRequest) returns (GRpcAddSessionResponse);
 
-    rpc getInfoAboutTimeOfSessionById(gRPCGetInfoTimeOfSessionByIdRequest) returns (gRPCGetInfoTimeOfSessionByIdResponse);
+    rpc getInfoAboutSessionById(GRpcGetInfoAboutSessionByIdRequest) returns (GRpcGetInfoAboutSessionByIdResponse);
 
-    rpc getSessionsByMovieId(gRPCGetSessionsByMovieIdRequest) returns (gRPCGetSessionsByMovieIdResponse);
+    rpc getSessionsByMovieId(GRpcGetSessionsByMovieIdRequest) returns (GRpcGetSessionsByMovieIdResponse);
 
-    rpc deleteSessionById(gRPCDeleteSessionByIdRequest) returns (Empty);
+    rpc deleteSessionById(GRpcDeleteSessionByIdRequest) returns (Empty);
 
-    rpc deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest) returns (Empty);
+    rpc deleteAllSessionsByMovieId(GRpcDeleteAllSessionsByMovieIdRequest) returns (Empty);
 
-    rpc getAllCinemaHall(gRPCGetAllCinemaHallRequest) returns (gRPCGetAllCinemaHallResponse);
+    rpc getAllCinemaHall(GRpcGetAllCinemaHallRequest) returns (GRpcGetAllCinemaHallResponse);
 
-    rpc addCinemaHall(gRPCAddCinemaHallRequest) returns (gRPCAddCinemaHallResponse);
+    rpc addCinemaHall(GRpcAddCinemaHallRequest) returns (GRpcAddCinemaHallResponse);
 
-    rpc deleteCinemaHallById(gRPCDeleteCinemaHallByIdRequest) returns (gRPCDeleteCinemaHallByIdResponse);
+    rpc deleteCinemaHallById(GRpcDeleteCinemaHallByIdRequest) returns (GRpcDeleteCinemaHallByIdResponse);
 
-    rpc getCinemaHallById(gRPCGetCinemaHallByIdRequest) returns(gRPCGetCinemaHallByIdResponse);
+    rpc getCinemaHallById(GRpcGetCinemaHallByIdRequest) returns(GRpcGetCinemaHallByIdResponse);
 
-    rpc assignHallAndSession(gRPCAssignHallAndSessionRequest) returns (Empty);
+    rpc assignHallAndSession(GRpcAssignHallAndSessionRequest) returns (Empty);
 
 }

@@ -5,36 +5,36 @@ import "moviesession/model/model.proto";
 option java_multiple_files = true;
 option java_package = "com.brekhin.moviesession.grpc.model";
 
-message gRPCAddDateOfSessionResponse {
+message GRpcAddDateOfSessionResponse {
     int64 dateOfSessionId = 1;
 }
 
-message gRPCAddTimeOfSessionResponse {
-    int64 timeOfSessionId = 1;
+message GRpcAddSessionResponse {
+    int64 sessionId = 1;
 }
 
 
-message gRPCGetInfoTimeOfSessionByIdResponse {
-    GTimeOfSession timeOfSessions = 1;
+message GRpcGetInfoAboutSessionByIdResponse {
+    GSession timeOfSessions = 1;
 }
 
-message gRPCGetSessionsByMovieIdResponse {
-    repeated GTimeOfSession sessions = 1;
+message GRpcGetSessionsByMovieIdResponse {
+    repeated GSession sessions = 1;
 }
 
-message gRPCGetAllCinemaHallResponse{
+message GRpcGetAllCinemaHallResponse{
     repeated GCinemaHall gCinemaHall = 1;
 }
 
-message gRPCAddCinemaHallResponse {
+message GRpcAddCinemaHallResponse {
     int64 hallId = 1;
 }
 
-message gRPCDeleteCinemaHallByIdResponse {
+message GRpcDeleteCinemaHallByIdResponse {
     int64 hallId = 1;
 }
 
-message gRPCGetCinemaHallByIdResponse {
+message GRpcGetCinemaHallByIdResponse {
     GCinemaHall gCinemaHall = 1;
 }
 
