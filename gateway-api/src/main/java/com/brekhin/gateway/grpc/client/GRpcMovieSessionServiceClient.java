@@ -32,47 +32,46 @@ public class GRpcMovieSessionServiceClient {
         movieSessionServiceBlockingStub = MovieSessionServiceGrpc.newBlockingStub(managedChannel);
     }
 
-    public gRPCAddTimeOfSessionResponse addTimeOfSession(gRPCAddTimeOfSessionRequest request) {
-        return movieSessionServiceBlockingStub.addTimeOfSession(request);
+    public GRpcAddSessionResponse addTimeOfSession(GRpcAddSessionRequest request) {
+        return movieSessionServiceBlockingStub.addSession(request);
     }
 
-    public gRPCGetInfoTimeOfSessionByIdResponse getInfoTimeOfSessionById(gRPCGetInfoTimeOfSessionByIdRequest request) {
-        return movieSessionServiceBlockingStub.getInfoAboutTimeOfSessionById(request);
+    public GRpcGetInfoAboutSessionByIdResponse getInfoTimeOfSessionById(GRpcGetInfoAboutSessionByIdRequest request) {
+        return movieSessionServiceBlockingStub.getInfoAboutSessionById(request);
     }
 
-    public gRPCGetSessionsByMovieIdResponse getSessionsByMovieId(gRPCGetSessionsByMovieIdRequest request) {
+    public GRpcGetSessionsByMovieIdResponse getSessionsByMovieId(GRpcGetSessionsByMovieIdRequest request) {
         return movieSessionServiceBlockingStub.getSessionsByMovieId(request);
     }
 
-    public Empty deletSessionById(gRPCDeleteSessionByIdRequest request) {
+    public Empty deletSessionById(GRpcDeleteSessionByIdRequest request) {
         return movieSessionServiceBlockingStub.deleteSessionById(request);
     }
 
-    public Empty deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest request) {
+    public Empty deleteAllSessionsByMovieId(GRpcDeleteAllSessionsByMovieIdRequest request) {
         return movieSessionServiceBlockingStub.deleteAllSessionsByMovieId(request);
     }
 
-    public gRPCGetAllCinemaHallResponse getAllCinemaHall(gRPCGetAllCinemaHallRequest request) {
+    public GRpcGetAllCinemaHallResponse getAllCinemaHall(GRpcGetAllCinemaHallRequest request) {
         return movieSessionServiceBlockingStub.getAllCinemaHall(request);
     }
 
 
-    public gRPCAddCinemaHallResponse addCinemaHall(gRPCAddCinemaHallRequest request) {
+    public GRpcAddCinemaHallResponse addCinemaHall(GRpcAddCinemaHallRequest request) {
         return movieSessionServiceBlockingStub.addCinemaHall(request);
     }
 
 
-    public gRPCDeleteCinemaHallByIdResponse deleteCinemaHallById(gRPCDeleteCinemaHallByIdRequest request) {
+    public GRpcDeleteCinemaHallByIdResponse deleteCinemaHallById(GRpcDeleteCinemaHallByIdRequest request) {
         return movieSessionServiceBlockingStub.deleteCinemaHallById(request);
     }
 
 
-    public gRPCGetCinemaHallByIdResponse getCinemaHallById(gRPCGetCinemaHallByIdRequest request) {
+    public GRpcGetCinemaHallByIdResponse getCinemaHallById(GRpcGetCinemaHallByIdRequest request) {
         return movieSessionServiceBlockingStub.getCinemaHallById(request);
     }
 
-
-    public Empty assignHallAndSession(gRPCAssignHallAndSessionRequest request) {
+    public Empty assignHallAndSession(GRpcAssignHallAndSessionRequest request) {
         return movieSessionServiceBlockingStub.assignHallAndSession(request);
     }
 }

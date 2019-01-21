@@ -10,6 +10,7 @@ import com.brekhin.movie.grpc.Empty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.*;
 public class TicketController {
 
     private final TicketService ticketService;
+    private final MovieSessionService movieSessionService;
 
     @Autowired
-    public TicketController(TicketService ticketService) {
+    public TicketController(TicketService ticketService, MovieSessionService movieSessionService) {
         this.ticketService = ticketService;
+        this.movieSessionService = movieSessionService;
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -34,12 +37,14 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getTicketById(id));
     }
 
-    @RequestMapping(path = "/selectseat", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<TicketBuildStep2> getSessionById(@RequestBody TicketBuildStep2 ticketBuild) {
-        return ResponseEntity.ok(new TicketBuildStep2(
-                ticketBuild.getTicketId(),
-                ticketBuild.getTicketBuildStep1(),
-                ticketBuild.getCol(),
-                ticketBuild.getRow()));
+    @PutMapping(path = "/{sessionId}/selectseat", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getSessionById(@PathVariable Long sessionId, Model model) {
+        TicketBuildStep1 ticketInfo = movieSessionService.getInfoTimeOfSessionById(sessionId);
+//        TicketBuildStep2 step2 = new TicketBuildStep2(
+//                ticketBuild.getTicketId(),
+//                ticketBuild.getTicketBuildStep1(),
+//                ticketBuild.getCol(),
+//                ticketBuild.getRow()));
+        return null;
     }
 }

@@ -8,31 +8,24 @@ import java.sql.Timestamp;
 
 public class AddTimeOfSessionRequest {
 
-    private final Long timeOfSessionId;
-    private final Timestamp timeOfSessionDate;
+    private final String timeOfSession;
     private final Long movieId;
     private final int price;
     private final Long hallId;
 
     public AddTimeOfSessionRequest(
-            @JsonProperty("timeOfSessionId") Long timeOfSessionId,
-            @JsonProperty("timeOfSessionDate") Timestamp timeOfSessionDate,
+            @JsonProperty("timeOfSession") String timeOfSession,
             @JsonProperty("movieId") Long movieId,
             @JsonProperty("price") int price,
             @JsonProperty("hallId") Long hallId) {
-        this.timeOfSessionId = timeOfSessionId;
-        this.timeOfSessionDate = timeOfSessionDate;
+        this.timeOfSession = timeOfSession;
         this.movieId = movieId;
         this.price = price;
         this.hallId = hallId;
     }
 
-    public Long getTimeOfSessionId() {
-        return timeOfSessionId;
-    }
-
-    public Timestamp getTimeOfSessionDate() {
-        return timeOfSessionDate;
+    public String getTimeOfSession() {
+        return timeOfSession;
     }
 
     public Long getMovieId() {

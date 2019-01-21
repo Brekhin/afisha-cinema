@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +35,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public Long addTimeOfSession(AddTimeOfSessionRequest request) {
-        return gRpcMovieSessionServiceClient.addTimeOfSession(MovieSessionConverter.convert(request)).getTimeOfSessionId();
+        return gRpcMovieSessionServiceClient.addTimeOfSession(MovieSessionConverter.convert(request)).getSessionId();
     }
 
     @Override
@@ -52,8 +51,8 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     public TicketBuildStep1 getInfoTimeOfSessionById(Long timeOfSessionId) {
         InfoTimeOfSessionResponse infoAboutSession = MovieSessionConverter.convert(
                 gRpcMovieSessionServiceClient.getInfoTimeOfSessionById(
-                        gRPCGetInfoTimeOfSessionByIdRequest.newBuilder()
-                                .setTimeOfSessionId(timeOfSessionId)
+                        GRpcGetInfoAboutSessionByIdRequest.newBuilder()
+                                .setSessionId(timeOfSessionId)
                                 .build())
                         .getTimeOfSessions());
         Long movieId = infoAboutSession.getMovieId();
@@ -61,34 +60,34 @@ public class MovieSessionServiceImpl implements MovieSessionService {
         String movieName = gRpcMovieServiceClient.getMovie(gRPCGetMovieRequest.newBuilder()
                 .setMovieId(movieId)
                 .build()).getMovie().getName();
-        String hallName = gRpcMovieSessionServiceClient.getCinemaHallById(gRPCGetCinemaHallByIdRequest.newBuilder()
+        String hallName = gRpcMovieSessionServiceClient.getCinemaHallById(GRpcGetCinemaHallByIdRequest.newBuilder()
                 .setHallId(hallId)
                 .build())
                 .getGCinemaHall()
                 .getName();
-        Timestamp timeOfSessionDate = infoAboutSession.getTimeOfSessionDate();
+        String timeOfSession = infoAboutSession.getTimeOfSessionDate();
         int price = infoAboutSession.getPrice();
 
-        return new TicketBuildStep1(timeOfSessionId, movieName,hallName,timeOfSessionDate, price);
+        return new TicketBuildStep1(timeOfSessionId, movieName,hallName,timeOfSession, price);
     }
 
     @Override
     public void deleteSessionById(Long id) {
-        gRpcMovieSessionServiceClient.deletSessionById(gRPCDeleteSessionByIdRequest.newBuilder()
+        gRpcMovieSessionServiceClient.deletSessionById(GRpcDeleteSessionByIdRequest.newBuilder()
                 .setSessionId(id)
                 .build());
     }
 
     @Override
     public void deleteAllSessionsByMovieId(Long movieId) {
-        gRpcMovieSessionServiceClient.deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest.newBuilder()
+        gRpcMovieSessionServiceClient.deleteAllSessionsByMovieId(GRpcDeleteAllSessionsByMovieIdRequest.newBuilder()
                 .setMovieId(movieId)
                 .build());
     }
 
     @Override
     public List<CinemaHallTO> getAllCinemaHall() {
-        return gRpcMovieSessionServiceClient.getAllCinemaHall(gRPCGetAllCinemaHallRequest.newBuilder().build())
+        return gRpcMovieSessionServiceClient.getAllCinemaHall(GRpcGetAllCinemaHallRequest.newBuilder().build())
                 .getGCinemaHallList()
                 .stream()
                 .map(MovieSessionConverter::convert)
@@ -97,7 +96,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public Long addCinemaHall(CinemaHallTO cinemaHall) {
-        return gRpcMovieSessionServiceClient.addCinemaHall(gRPCAddCinemaHallRequest.newBuilder()
+        return gRpcMovieSessionServiceClient.addCinemaHall(GRpcAddCinemaHallRequest.newBuilder()
                 .setCinemaHall(MovieSessionConverter.convert(cinemaHall))
                 .build())
                 .getHallId();
@@ -105,7 +104,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public Long deleteCinemaHallById(Long id) {
-        return gRpcMovieSessionServiceClient.deleteCinemaHallById(gRPCDeleteCinemaHallByIdRequest.newBuilder()
+        return gRpcMovieSessionServiceClient.deleteCinemaHallById(GRpcDeleteCinemaHallByIdRequest.newBuilder()
                 .setHallId(id)
                 .build())
                 .getHallId();
@@ -113,7 +112,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public CinemaHallTO getCinemaHallById(Long id) {
-        return MovieSessionConverter.convert(gRpcMovieSessionServiceClient.getCinemaHallById(gRPCGetCinemaHallByIdRequest.newBuilder()
+        return MovieSessionConverter.convert(gRpcMovieSessionServiceClient.getCinemaHallById(GRpcGetCinemaHallByIdRequest.newBuilder()
                 .setHallId(id)
                 .build())
                 .getGCinemaHall());

@@ -14,8 +14,8 @@ import com.brekhin.gateway.web.to.out.moviesession.CinemaHallTO;
 import com.brekhin.gateway.web.to.out.moviesession.InfoTimeOfSessionResponse;
 import com.brekhin.gateway.web.to.out.ticket.TicketTarget;
 import com.brekhin.movie.grpc.model.gRPCGetMovieRequest;
-import com.brekhin.moviesession.grpc.model.gRPCGetCinemaHallByIdRequest;
-import com.brekhin.moviesession.grpc.model.gRPCGetInfoTimeOfSessionByIdRequest;
+import com.brekhin.moviesession.grpc.model.GRpcGetCinemaHallByIdRequest;
+import com.brekhin.moviesession.grpc.model.GRpcGetInfoAboutSessionByIdRequest;
 import com.brekhin.ticket.grpc.model.gRPCDeleteTicketByIdRequest;
 import com.brekhin.ticket.grpc.model.gRPCDeleteTicketsBySessionIdRequest;
 import com.brekhin.ticket.grpc.model.gRPCGetTicketByIdRequest;
@@ -57,15 +57,15 @@ public class TicketServiceImpl implements TicketService {
                 .setTicketId(id)
                 .build()).getGTicket());
 
-        InfoTimeOfSessionResponse session = MovieSessionConverter.convert(gRpcMovieSessionServiceClient.getInfoTimeOfSessionById(gRPCGetInfoTimeOfSessionByIdRequest.newBuilder()
-                .setTimeOfSessionId(ticketInfo.getSessionId())
+        InfoTimeOfSessionResponse session = MovieSessionConverter.convert(gRpcMovieSessionServiceClient.getInfoTimeOfSessionById(GRpcGetInfoAboutSessionByIdRequest.newBuilder()
+                .setSessionId(ticketInfo.getSessionId())
                 .build()).getTimeOfSessions());
 
         GetMovie movie = MovieConverter.convert(gRpcMovieServiceClient.getMovie(gRPCGetMovieRequest.newBuilder()
                 .setMovieId(session.getMovieId())
                 .build()).getMovie());
 
-        CinemaHallTO cinemaHall = MovieSessionConverter.convert(gRpcMovieSessionServiceClient.getCinemaHallById(gRPCGetCinemaHallByIdRequest.newBuilder()
+        CinemaHallTO cinemaHall = MovieSessionConverter.convert(gRpcMovieSessionServiceClient.getCinemaHallById(GRpcGetCinemaHallByIdRequest.newBuilder()
                 .setHallId(session.getHallId())
                 .build()).getGCinemaHall());
 

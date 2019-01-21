@@ -13,7 +13,6 @@ public class MovieConverter {
     public static gRPCAddMovieRequest convert(AddMovieRequest request) {
         return gRPCAddMovieRequest.newBuilder()
                 .setMovie(GMovie.newBuilder()
-                        .setMovieId(request.getMovieId())
                         .setName(request.getName())
                         .setGenre(request.getGenre())
                         .setDuration(request.getDuration())

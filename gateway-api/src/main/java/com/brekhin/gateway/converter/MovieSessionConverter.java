@@ -4,22 +4,20 @@ import com.brekhin.gateway.web.to.in.moviesession.AddTimeOfSessionRequest;
 import com.brekhin.gateway.web.to.out.moviesession.CinemaHallTO;
 import com.brekhin.gateway.web.to.out.moviesession.InfoTimeOfSessionResponse;
 import com.brekhin.moviesession.grpc.model.GCinemaHall;
-import com.brekhin.moviesession.grpc.model.GTimeOfSession;
-import com.brekhin.moviesession.grpc.model.gRPCAddTimeOfSessionRequest;
-import com.brekhin.moviesession.grpc.model.gRPCGetSessionsByMovieIdRequest;
+import com.brekhin.moviesession.grpc.model.GRpcAddSessionRequest;
+import com.brekhin.moviesession.grpc.model.GRpcGetSessionsByMovieIdRequest;
+import com.brekhin.moviesession.grpc.model.GSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.sql.Timestamp;
 
 public class MovieSessionConverter {
     private final static Logger log = LoggerFactory.getLogger(MovieSessionConverter.class);
 
-    public static gRPCAddTimeOfSessionRequest convert(AddTimeOfSessionRequest gTimeOfSession) {
-        return gRPCAddTimeOfSessionRequest.newBuilder()
-                .setTimeOfSession(GTimeOfSession.newBuilder()
-                        .setTimeOfSessionId(gTimeOfSession.getTimeOfSessionId())
-                        .setTimeOfSessionDate(gTimeOfSession.getTimeOfSessionDate().getTime())
+    public static GRpcAddSessionRequest convert(AddTimeOfSessionRequest gTimeOfSession) {
+        return GRpcAddSessionRequest.newBuilder()
+                .setSession(GSession.newBuilder()
+                        .setTimeOfSession(gTimeOfSession.getTimeOfSession())
+                        .setTimeOfSession(gTimeOfSession.getTimeOfSession())
                         .setMovieId(gTimeOfSession.getMovieId())
                         .setPrice(gTimeOfSession.getPrice())
                         .setHallId(gTimeOfSession.getHallId())
@@ -27,16 +25,16 @@ public class MovieSessionConverter {
                 .build();
     }
 
-    public static gRPCGetSessionsByMovieIdRequest convert(Long id) {
-        return gRPCGetSessionsByMovieIdRequest.newBuilder()
+    public static GRpcGetSessionsByMovieIdRequest convert(Long id) {
+        return GRpcGetSessionsByMovieIdRequest.newBuilder()
                 .setMovieId(id)
                 .build();
     }
 
-    public static InfoTimeOfSessionResponse convert(GTimeOfSession request) {
+    public static InfoTimeOfSessionResponse convert(GSession request) {
         return new InfoTimeOfSessionResponse(
-                request.getTimeOfSessionId(),
-                new Timestamp(request.getTimeOfSessionDate()),
+                request.getSessionId(),
+                request.getTimeOfSession(),
                 request.getMovieId(),
                 request.getPrice(),
                 request.getHallId()

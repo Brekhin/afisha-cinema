@@ -3,14 +3,12 @@ package com.brekhin.gateway.web.to.in.ticket;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.sql.Timestamp;
-
 public class TicketBuildStep1 {
 
     private Long sessionId;
     private String movieName;
     private String hallName;
-    private Timestamp time;
+    private String time;
     private int price;
 
     public TicketBuildStep1() {
@@ -21,7 +19,7 @@ public class TicketBuildStep1 {
             @JsonProperty("sessionId") Long sessionId,
             @JsonProperty("movieName") String movieName,
             @JsonProperty("hallName") String hallName,
-            @JsonProperty("sessionTime") Timestamp time,
+            @JsonProperty("sessionTime") String time,
             @JsonProperty("price") int price) {
         this.sessionId = sessionId;
         this.movieName = movieName;
@@ -46,7 +44,7 @@ public class TicketBuildStep1 {
     }
 
     @JsonGetter("time")
-    public Timestamp getTime() {
+    public String getTime() {
         return time;
     }
 

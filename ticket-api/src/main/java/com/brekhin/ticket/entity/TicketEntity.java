@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class TicketEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long ticketId;
     private Long sessionId;
     private int col;

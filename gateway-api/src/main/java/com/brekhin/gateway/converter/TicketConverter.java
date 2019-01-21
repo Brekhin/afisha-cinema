@@ -10,7 +10,6 @@ public class TicketConverter {
     public static gRPCAddTicketRequest convert(TicketBuildStep2 request) {
         return gRPCAddTicketRequest.newBuilder()
                 .setGTicket(GTicket.newBuilder()
-                        .setTicketId(request.getTicketId())
                         .setSessionId(request.getTicketBuildStep1().getSessionId())
                         .setCol(request.getCol())
                         .setRow(request.getRow()))

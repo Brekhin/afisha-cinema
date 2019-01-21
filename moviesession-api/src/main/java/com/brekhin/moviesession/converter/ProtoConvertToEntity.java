@@ -3,27 +3,23 @@ package com.brekhin.moviesession.converter;
 import com.brekhin.moviesession.entity.CinemaHallEntity;
 import com.brekhin.moviesession.entity.TimeOfSessionEntity;
 import com.brekhin.moviesession.grpc.model.GCinemaHall;
-import com.brekhin.moviesession.grpc.model.GTimeOfSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.sql.Timestamp;
+import com.brekhin.moviesession.grpc.model.GSession;
 
 public class ProtoConvertToEntity {
 
-    public static TimeOfSessionEntity convert(GTimeOfSession gTimeOfSession) {
+    public static TimeOfSessionEntity convert(GSession gSession) {
         return new TimeOfSessionEntity()
-                .setTimeOfSessionId(gTimeOfSession.getTimeOfSessionId())
-                .setTimeOfSessionDate(new Timestamp(gTimeOfSession.getTimeOfSessionDate()))
-                .setMovieId(gTimeOfSession.getMovieId())
-                .setPrice(gTimeOfSession.getPrice())
-                .setHallId(gTimeOfSession.getHallId());
+                .setTimeOfSessionId(gSession.getSessionId())
+                .setTimeOfSession(gSession.getTimeOfSession())
+                .setMovieId(gSession.getMovieId())
+                .setPrice(gSession.getPrice())
+                .setHallId(gSession.getHallId());
     }
 
-    public static GTimeOfSession convert(TimeOfSessionEntity gTimeOfSession) {
-        return GTimeOfSession.newBuilder()
-                .setTimeOfSessionId(gTimeOfSession.getTimeOfSessionId())
-                .setTimeOfSessionDate(gTimeOfSession.getTimeOfSessionDate().getTime())
+    public static GSession convert(TimeOfSessionEntity gTimeOfSession) {
+        return GSession.newBuilder()
+                .setSessionId(gTimeOfSession.getTimeOfSessionId())
+                .setTimeOfSession(gTimeOfSession.getTimeOfSession())
                 .setMovieId(gTimeOfSession.getMovieId())
                 .setPrice(gTimeOfSession.getPrice())
                 .setHallId(gTimeOfSession.getHallId())

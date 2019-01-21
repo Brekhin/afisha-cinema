@@ -34,10 +34,11 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
         this.cinemaHallService = cinemaHallService;
     }
 
-    public void addTimeOfSession(gRPCAddTimeOfSessionRequest request, StreamObserver<gRPCAddTimeOfSessionResponse> response) {
+    @Override
+    public void addSession(GRpcAddSessionRequest request, StreamObserver<GRpcAddSessionResponse> response) {
         try {
-            Long timeOfSession = cinemaSessionService.addTimeOfSession(ProtoConvertToEntity.convert(request.getTimeOfSession()));
-            response.onNext(gRPCAddTimeOfSessionResponse.newBuilder().setTimeOfSessionId(timeOfSession).build());
+            Long timeOfSession = cinemaSessionService.addTimeOfSession(ProtoConvertToEntity.convert(request.getSession()));
+            response.onNext(GRpcAddSessionResponse.newBuilder().setSessionId(timeOfSession).build());
             response.onCompleted();
         } catch (Exception e) {
             onError(response, e);
@@ -45,10 +46,10 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
     }
 
     @Override
-    public void getInfoAboutTimeOfSessionById(gRPCGetInfoTimeOfSessionByIdRequest request, StreamObserver<gRPCGetInfoTimeOfSessionByIdResponse> responseObserver) {
+    public void getInfoAboutSessionById(GRpcGetInfoAboutSessionByIdRequest request, StreamObserver<GRpcGetInfoAboutSessionByIdResponse> responseObserver) {
         try {
-            TimeOfSessionEntity getTimeOfSessionById = cinemaSessionService.getTimeOfSessionById(request.getTimeOfSessionId());
-            responseObserver.onNext(gRPCGetInfoTimeOfSessionByIdResponse.newBuilder()
+            TimeOfSessionEntity getTimeOfSessionById = cinemaSessionService.getTimeOfSessionById(request.getSessionId());
+            responseObserver.onNext(GRpcGetInfoAboutSessionByIdResponse.newBuilder()
                     .setTimeOfSessions(ProtoConvertToEntity.convert(getTimeOfSessionById))
                     .build());
             responseObserver.onCompleted();
@@ -57,10 +58,10 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
         }
     }
 
-    public void getSessionsByMovieId(gRPCGetSessionsByMovieIdRequest request, StreamObserver<gRPCGetSessionsByMovieIdResponse> response) {
+    public void getSessionsByMovieId(GRpcGetSessionsByMovieIdRequest request, StreamObserver<GRpcGetSessionsByMovieIdResponse> response) {
         try {
             Collection<TimeOfSessionEntity> sessions = cinemaSessionService.getSessionsByMovieId(request.getMovieId());
-            response.onNext(gRPCGetSessionsByMovieIdResponse.newBuilder()
+            response.onNext(GRpcGetSessionsByMovieIdResponse.newBuilder()
                     .addAllSessions(sessions.stream()
                             .map(ProtoConvertToEntity::convert)
                             .collect(Collectors.toList()))
@@ -72,7 +73,7 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
     }
 
     @Override
-    public void deleteSessionById(gRPCDeleteSessionByIdRequest request, StreamObserver<Empty> responseObserver) {
+    public void deleteSessionById(GRpcDeleteSessionByIdRequest request, StreamObserver<Empty> responseObserver) {
         try {
             cinemaSessionService.deleteSessionById(request.getSessionId());
             responseObserver.onNext(Empty.newBuilder().build());
@@ -83,7 +84,7 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
     }
 
     @Override
-    public void deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest request, StreamObserver<Empty> responseObserver) {
+    public void deleteAllSessionsByMovieId(GRpcDeleteAllSessionsByMovieIdRequest request, StreamObserver<Empty> responseObserver) {
         try {
             cinemaSessionService.deleteSessionsByMovieId(request.getMovieId());
             responseObserver.onNext(Empty.newBuilder().build());
@@ -94,10 +95,10 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
     }
 
     @Override
-    public void getAllCinemaHall(gRPCGetAllCinemaHallRequest request, StreamObserver<gRPCGetAllCinemaHallResponse> responseObserver) {
+    public void getAllCinemaHall(GRpcGetAllCinemaHallRequest request, StreamObserver<GRpcGetAllCinemaHallResponse> responseObserver) {
         try {
             List<CinemaHallEntity> allCinemaHall = cinemaHallService.getAllCinemaHall();
-            responseObserver.onNext(gRPCGetAllCinemaHallResponse.newBuilder()
+            responseObserver.onNext(GRpcGetAllCinemaHallResponse.newBuilder()
                     .addAllGCinemaHall(allCinemaHall.stream()
                             .map(ProtoConvertToEntity::convert)
                             .collect(Collectors.toList()))
@@ -109,10 +110,10 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
     }
 
     @Override
-    public void addCinemaHall(gRPCAddCinemaHallRequest request, StreamObserver<gRPCAddCinemaHallResponse> responseObserver) {
+    public void addCinemaHall(GRpcAddCinemaHallRequest request, StreamObserver<GRpcAddCinemaHallResponse> responseObserver) {
         try {
             Long id = cinemaHallService.addCinemaHall(ProtoConvertToEntity.convert(request.getCinemaHall()));
-            responseObserver.onNext(gRPCAddCinemaHallResponse.newBuilder()
+            responseObserver.onNext(GRpcAddCinemaHallResponse.newBuilder()
                     .setHallId(id)
                     .build());
             responseObserver.onCompleted();
@@ -122,10 +123,10 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
     }
 
     @Override
-    public void deleteCinemaHallById(gRPCDeleteCinemaHallByIdRequest request, StreamObserver<gRPCDeleteCinemaHallByIdResponse> responseObserver) {
+    public void deleteCinemaHallById(GRpcDeleteCinemaHallByIdRequest request, StreamObserver<GRpcDeleteCinemaHallByIdResponse> responseObserver) {
         try {
             Long id = cinemaHallService.deleteCinemaHallById(request.getHallId());
-            responseObserver.onNext(gRPCDeleteCinemaHallByIdResponse.newBuilder()
+            responseObserver.onNext(GRpcDeleteCinemaHallByIdResponse.newBuilder()
                     .setHallId(id)
                     .build());
             responseObserver.onCompleted();
@@ -135,10 +136,10 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
     }
 
     @Override
-    public void getCinemaHallById(gRPCGetCinemaHallByIdRequest request, StreamObserver<gRPCGetCinemaHallByIdResponse> responseObserver) {
+    public void getCinemaHallById(GRpcGetCinemaHallByIdRequest request, StreamObserver<GRpcGetCinemaHallByIdResponse> responseObserver) {
         try {
             CinemaHallEntity cinemaHall = cinemaHallService.getCinemaHallById(request.getHallId());
-            responseObserver.onNext(gRPCGetCinemaHallByIdResponse.newBuilder()
+            responseObserver.onNext(GRpcGetCinemaHallByIdResponse.newBuilder()
                     .setGCinemaHall(ProtoConvertToEntity.convert(cinemaHall))
                     .build());
             responseObserver.onCompleted();
@@ -148,7 +149,7 @@ public class MovieSessionServiceGrpcImpl extends MovieSessionServiceGrpc.MovieSe
     }
 
     @Override
-    public void assignHallAndSession(gRPCAssignHallAndSessionRequest request, StreamObserver<Empty> responseObserver) {
+    public void assignHallAndSession(GRpcAssignHallAndSessionRequest request, StreamObserver<Empty> responseObserver) {
         try {
             cinemaSessionService.assignHallAndSession(request.getHallId(), request.getSessionId());
             responseObserver.onNext(Empty.newBuilder().build());

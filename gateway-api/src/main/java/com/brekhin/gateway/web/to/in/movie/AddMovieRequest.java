@@ -7,8 +7,6 @@ import java.sql.Timestamp;
 
 public class AddMovieRequest {
 
-    private Long movieId;
-
     private String name;
 
     private String genre;
@@ -19,14 +17,9 @@ public class AddMovieRequest {
                            @JsonProperty("movieName") String name,
                            @JsonProperty("genre") String genre,
                            @JsonProperty("duration") int duration) {
-        this.movieId = movieId;
         this.name = name;
         this.genre = genre;
         this.duration = duration;
-    }
-
-    public Long getMovieId() {
-        return movieId;
     }
 
     public String getName() {

@@ -7,12 +7,10 @@ import com.brekhin.gateway.grpc.client.GRpcMovieSessionServiceClient;
 import com.brekhin.gateway.service.MovieService;
 import com.brekhin.gateway.web.to.in.movie.AddMovieRequest;
 import com.brekhin.gateway.web.to.out.movie.GetMovie;
-import com.brekhin.movie.grpc.model.gRPCAssignMovieWithSessionRequest;
 import com.brekhin.movie.grpc.model.gRPCGetAllMoviesRequest;
 import com.brekhin.movie.grpc.model.gRPCGetMovieRequest;
 import com.brekhin.movie.grpc.model.gRPCRemoveMovieRequest;
-import com.brekhin.moviesession.grpc.model.gRPCDeleteAllSessionsByMovieIdRequest;
-import com.brekhin.moviesession.grpc.model.gRPCGetSessionsByMovieIdRequest;
+import com.brekhin.moviesession.grpc.model.GRpcDeleteAllSessionsByMovieIdRequest;
 import io.grpc.StatusRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +58,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void removeMovieById(Long movieId) {
-        rpcMovieSessionServiceClient.deleteAllSessionsByMovieId(gRPCDeleteAllSessionsByMovieIdRequest.newBuilder()
+        rpcMovieSessionServiceClient.deleteAllSessionsByMovieId(GRpcDeleteAllSessionsByMovieIdRequest.newBuilder()
                 .setMovieId(movieId)
                 .build());
 

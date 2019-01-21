@@ -10,12 +10,14 @@ import com.brekhin.gateway.web.to.out.moviesession.CinemaHallTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(value = "/api/movieservice-api", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class MovieServiceController {
 
@@ -42,10 +44,10 @@ public class MovieServiceController {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(path = "/session/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<TicketBuildStep1> getSessionById(@PathVariable Long id) {
+    @GetMapping(path = "/session/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody String getSessionById(@PathVariable Long id, Model model) {
         TicketBuildStep1 ticketInfo = movieSessionService.getInfoTimeOfSessionById(id);
-        return ResponseEntity.ok(ticketInfo);
+        return "redirect:/gateway-api/api/ticket-api/selectseat";
     }
 
     @RequestMapping(path = "/session/hall", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

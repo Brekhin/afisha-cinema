@@ -8,19 +8,19 @@ import java.sql.Timestamp;
 public class InfoTimeOfSessionResponse {
 
     private final Long timeOfSessionId;
-    private final Timestamp timeOfSessionDate;
+    private final String timeOfSession;
     private final Long movieId;
     private final int price;
     private final Long hallId;
 
     public InfoTimeOfSessionResponse(
             Long timeOfSessionId,
-            Timestamp timeOfSessionDate,
+            String timeOfSession,
             Long movieId,
             int price,
             Long hallId) {
         this.timeOfSessionId = timeOfSessionId;
-        this.timeOfSessionDate = timeOfSessionDate;
+        this.timeOfSession = timeOfSession;
         this.movieId = movieId;
         this.price = price;
         this.hallId = hallId;
@@ -31,9 +31,9 @@ public class InfoTimeOfSessionResponse {
         return timeOfSessionId;
     }
 
-    @JsonGetter("timeOfSessionDate")
-    public Timestamp getTimeOfSessionDate() {
-        return timeOfSessionDate;
+    @JsonGetter("timeOfSession")
+    public String getTimeOfSessionDate() {
+        return timeOfSession;
     }
 
     @JsonGetter("price")

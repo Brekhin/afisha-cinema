@@ -1,10 +1,7 @@
 package com.brekhin.moviesession.entity;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -12,12 +9,13 @@ import java.sql.Timestamp;
 public class TimeOfSessionEntity {
 
     private Long timeOfSessionId;
-    private Timestamp timeOfSessionDate;
+    private String timeOfSession;
     private Long movieId;
     private int price;
     private Long hallId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "timeOfSessionId")
     public Long getTimeOfSessionId() {
         return timeOfSessionId;
@@ -29,12 +27,12 @@ public class TimeOfSessionEntity {
     }
 
     @Column(name = "timeOfSession")
-    public Timestamp getTimeOfSessionDate() {
-        return timeOfSessionDate;
+    public String getTimeOfSession() {
+        return timeOfSession;
     }
 
-    public TimeOfSessionEntity setTimeOfSessionDate(Timestamp timeOfSessionDate) {
-        this.timeOfSessionDate = timeOfSessionDate;
+    public TimeOfSessionEntity setTimeOfSession(String timeOfSession) {
+        this.timeOfSession = timeOfSession;
         return this;
     }
 

@@ -12,7 +12,7 @@ public class TicketTarget {
     private final int columnHall;
     private final int rowHall;
     private final String hallName;
-    private final Timestamp time;
+    private final String time;
     private final int price;
 
     public TicketTarget(Long ticketId,
@@ -20,7 +20,7 @@ public class TicketTarget {
                         int columnHall,
                         int rowHall,
                         String hallName,
-                        Timestamp time,
+                        String time,
                         int price) {
         this.ticketId = ticketId;
         this.movieName = movieName;
@@ -57,7 +57,7 @@ public class TicketTarget {
     }
 
     @JsonGetter("timeOfSession")
-    public Timestamp getTime() {
+    public String getTime() {
         return time;
     }
 

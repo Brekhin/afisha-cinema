@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.MediaType;
@@ -18,7 +20,7 @@ import org.springframework.http.MediaType;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(path = "/api/movies", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class MovieController {
 
@@ -31,17 +33,18 @@ public class MovieController {
         this.movieSessionService = movieSessionService;
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AddMovie> addMovie(@RequestBody @Valid AddMovieRequest request) {
         return ResponseEntity.ok(new AddMovie(movieService.addMovie(request)));
     }
 
-    @RequestMapping(path = "/{movieId}", method = RequestMethod.GET)
-    public ResponseEntity<GetMovie> getMovie(@PathVariable Long movieId){
+    @GetMapping(path = "/{movieId}")
+    public String getMovie(@PathVariable Long movieId, Model model){
         List<InfoTimeOfSessionResponse> sessionsByMovieId = movieSessionService.getSessionsByMovieId(movieId);
         GetMovie movie = movieService.getMovie(movieId);
         movie.getSessions().addAll(sessionsByMovieId);
-        return ResponseEntity.ok(movie);
+        model.addAttribute("movie", movie);
+        return "movieInfo";
     }
 
 
@@ -51,12 +54,14 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(path = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<GetMovie>> getAllMovies(
+    @GetMapping(path = "/all")
+    public String getAllMovies(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            Model model
     ) {
-        return ResponseEntity.ok(movieService.getAllMovies(page, size));
+        model.addAttribute("movies", movieService.getAllMovies(page, size));
+        return "allMovies";
     }
 
 }

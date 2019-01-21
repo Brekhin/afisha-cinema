@@ -9,12 +9,6 @@ import org.springframework.data.domain.Pageable;
 
 public class ProtoConvertToEntity {
 
-    public static GUuid convert(Long uuid) {
-        return GUuid.newBuilder()
-                .setUuid(String.valueOf(uuid))
-                .build();
-    }
-
     public static Pageable convert(GPageable gPageable){
         return PageRequest.of(gPageable.getPage(), gPageable.getSize());
     }
