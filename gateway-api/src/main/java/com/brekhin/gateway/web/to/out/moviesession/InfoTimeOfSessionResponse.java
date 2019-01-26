@@ -32,7 +32,7 @@ public class InfoTimeOfSessionResponse {
     }
 
     @JsonGetter("timeOfSession")
-    public String getTimeOfSessionDate() {
+    public String getTimeOfSession() {
         return timeOfSession;
     }
 

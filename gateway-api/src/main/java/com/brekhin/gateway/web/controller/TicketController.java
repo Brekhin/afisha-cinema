@@ -10,10 +10,15 @@ import com.brekhin.movie.grpc.Empty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+import javax.validation.Valid;
+import java.util.Map;
+
+@Controller
 @RequestMapping(path = "/api/ticket-api", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class TicketController {
 
@@ -26,25 +31,37 @@ public class TicketController {
         this.movieSessionService = movieSessionService;
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Void> addTicket(@RequestBody TicketBuildStep2 ticketInfo) {
-        ticketService.addTicket(ticketInfo);
-        return ResponseEntity.noContent().build();
-    }
-
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<TicketTarget> getTicketById(@PathVariable Long id){
+    public ResponseEntity<TicketTarget> getTicketById(@PathVariable Long id) {
         return ResponseEntity.ok(ticketService.getTicketById(id));
     }
 
-    @PutMapping(path = "/{sessionId}/selectseat", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getSessionById(@PathVariable Long sessionId, Model model) {
+    @GetMapping(path = "/{sessionId}/selectseat")
+    public String getAllSeats(@PathVariable Long sessionId, Model model) {
         TicketBuildStep1 ticketInfo = movieSessionService.getInfoTimeOfSessionById(sessionId);
-//        TicketBuildStep2 step2 = new TicketBuildStep2(
-//                ticketBuild.getTicketId(),
-//                ticketBuild.getTicketBuildStep1(),
-//                ticketBuild.getCol(),
-//                ticketBuild.getRow()));
-        return null;
+        model.addAttribute("movieInfo", ticketInfo);
+        return "selectSeat";
+    }
+
+
+    @PostMapping(path = "/{sessionId}/selectseat")
+    public String setSeat(
+            @PathVariable Long sessionId,
+            @RequestParam(value = "row") String row,
+            @RequestParam(value = "col") String col,
+            Model model) {
+
+        TicketBuildStep1 ticketBuildStep1 = movieSessionService.getInfoTimeOfSessionById(sessionId);
+        TicketBuildStep2 ticketBuildStep2 = new TicketBuildStep2(ticketBuildStep1, Integer.parseInt(row), Integer.parseInt(col));
+        Long ticketId = ticketService.addTicket(ticketBuildStep2);
+
+        return "redirect:/api/ticket-api/order/" + ticketId;
+    }
+
+    @GetMapping(path = "/order/{ticketId}")
+    public String getInfoAboutTicket(@PathVariable Long ticketId, Model model) {
+        TicketTarget ticket = ticketService.getTicketById(ticketId);
+        model.addAttribute("ticket", ticket);
+        return "ticketInfo";
     }
 }

@@ -17,7 +17,6 @@ public class MovieSessionConverter {
         return GRpcAddSessionRequest.newBuilder()
                 .setSession(GSession.newBuilder()
                         .setTimeOfSession(gTimeOfSession.getTimeOfSession())
-                        .setTimeOfSession(gTimeOfSession.getTimeOfSession())
                         .setMovieId(gTimeOfSession.getMovieId())
                         .setPrice(gTimeOfSession.getPrice())
                         .setHallId(gTimeOfSession.getHallId())
@@ -50,7 +49,6 @@ public class MovieSessionConverter {
 
     public static GCinemaHall convert(CinemaHallTO cinemaHall) {
         return GCinemaHall.newBuilder()
-                .setHallId(cinemaHall.getHallId())
                 .setName(cinemaHall.getName())
                 .setSeatCount(cinemaHall.getSeatCount())
                 .build();

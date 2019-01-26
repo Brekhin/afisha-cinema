@@ -16,5 +16,8 @@
             </div>
         </#list>
     </div>
+    <div class="card-footer text-muted">
+        <a href="/newmovie">Add movie</a>
+    </div>
 </form>
 </@c.page>

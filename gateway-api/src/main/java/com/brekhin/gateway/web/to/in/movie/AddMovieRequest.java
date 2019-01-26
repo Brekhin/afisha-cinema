@@ -1,29 +1,28 @@
 package com.brekhin.gateway.web.to.in.movie;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.sql.Timestamp;
-
 public class AddMovieRequest {
 
-    private String name;
+    private String movieName;
 
     private String genre;
 
     private int duration;
 
-    public AddMovieRequest(@JsonProperty("movieId") Long movieId,
-                           @JsonProperty("movieName") String name,
+    @JsonCreator
+    public AddMovieRequest(@JsonProperty("movieName") String movieName,
                            @JsonProperty("genre") String genre,
                            @JsonProperty("duration") int duration) {
-        this.name = name;
+        this.movieName = movieName;
         this.genre = genre;
         this.duration = duration;
     }
 
     public String getName() {
-        return name;
+        return movieName;
     }
 
     public String getGenre() {

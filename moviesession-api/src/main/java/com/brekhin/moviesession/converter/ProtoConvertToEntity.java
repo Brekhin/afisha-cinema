@@ -36,7 +36,6 @@ public class ProtoConvertToEntity {
 
     public static CinemaHallEntity convert(GCinemaHall gCinemaHall) {
         return new CinemaHallEntity()
-                .setHallId(gCinemaHall.getHallId())
                 .setName(gCinemaHall.getName())
                 .setSeatCount(gCinemaHall.getSeatCount());
     }

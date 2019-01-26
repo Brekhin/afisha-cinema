@@ -7,6 +7,8 @@ import com.brekhin.gateway.web.to.in.moviesession.AddTimeOfSessionRequest;
 import com.brekhin.gateway.web.to.in.ticket.TicketBuildStep1;
 import com.brekhin.gateway.web.to.out.moviesession.AddTimeOfSession;
 import com.brekhin.gateway.web.to.out.moviesession.CinemaHallTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/api/movieservice-api", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/api/movieservice-api")
 public class MovieServiceController {
 
+    private static Logger log = LoggerFactory.getLogger(MovieServiceController.class);
     private final MovieSessionService movieSessionService;
     private final TicketService ticketService;
 
@@ -31,10 +34,20 @@ public class MovieServiceController {
         this.ticketService = ticketService;
     }
 
-    @RequestMapping(path = "/session", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Void> addSession(@RequestBody @Valid AddTimeOfSessionRequest request) {
+    @PostMapping(path = "/{movieId}/session")
+    public String addSession(@PathVariable Long movieId, AddTimeOfSessionRequest request) {
+        System.out.println("123");
+        log.error(request.toString());
         Long id = new AddTimeOfSession(movieSessionService.addTimeOfSession(request)).getTimeOfSessionId();
-        return ResponseEntity.noContent().build();
+        return "redirect:/api/movies/" + movieId;
+    }
+
+    @GetMapping(path = "/{movieId}/session")
+    public String getPageForAddSession(@PathVariable Long movieId, Model model) {
+        List<CinemaHallTO> allCinemaHall = movieSessionService.getAllCinemaHall();
+        model.addAttribute("cinemaHalls", allCinemaHall);
+        model.addAttribute("movieId", movieId);
+        return "addSession";
     }
 
     @RequestMapping(path = "/session/{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -45,7 +58,7 @@ public class MovieServiceController {
     }
 
     @GetMapping(path = "/session/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody String getSessionById(@PathVariable Long id, Model model) {
+    public String getSessionById(@PathVariable Long id, Model model) {
         TicketBuildStep1 ticketInfo = movieSessionService.getInfoTimeOfSessionById(id);
         return "redirect:/gateway-api/api/ticket-api/selectseat";
     }

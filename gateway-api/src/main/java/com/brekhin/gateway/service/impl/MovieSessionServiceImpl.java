@@ -65,7 +65,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
                 .build())
                 .getGCinemaHall()
                 .getName();
-        String timeOfSession = infoAboutSession.getTimeOfSessionDate();
+        String timeOfSession = infoAboutSession.getTimeOfSession();
         int price = infoAboutSession.getPrice();
 
         return new TicketBuildStep1(timeOfSessionId, movieName,hallName,timeOfSession, price);

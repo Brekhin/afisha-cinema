@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/api/movies", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(path = "/api/movies")
 public class MovieController {
 
     private final MovieService movieService;
@@ -33,9 +33,15 @@ public class MovieController {
         this.movieSessionService = movieSessionService;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<AddMovie> addMovie(@RequestBody @Valid AddMovieRequest request) {
-        return ResponseEntity.ok(new AddMovie(movieService.addMovie(request)));
+    @PostMapping(path = "/newmovie", consumes = MediaType.ALL_VALUE)
+    public String addMovie(@Valid AddMovieRequest request) {
+        Long movieId = movieService.addMovie(request);
+        return "redirect:/gateway-api/api/movies/" + movieId;
+    }
+
+    @GetMapping(path = "/newmovie")
+    public String addMovieGetPage(){
+        return "addMovie";
     }
 
     @GetMapping(path = "/{movieId}")

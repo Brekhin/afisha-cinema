@@ -70,7 +70,7 @@ public class TicketServiceImpl implements TicketService {
                 .build()).getGCinemaHall());
 
         return new TicketTarget(ticketInfo.getTicketId(), movie.getName(), ticketInfo.getCol(), ticketInfo.getRow(),
-                cinemaHall.getName(), session.getTimeOfSessionDate(), session.getPrice());
+                cinemaHall.getName(), session.getTimeOfSession(), session.getPrice());
     }
 
     @Override
