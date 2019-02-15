@@ -35,10 +35,8 @@ public class MovieServiceController {
     }
 
     @PostMapping(path = "/{movieId}/session")
-    public String addSession(@PathVariable Long movieId, AddTimeOfSessionRequest request) {
-        System.out.println("123");
-        log.error(request.toString());
-        Long id = new AddTimeOfSession(movieSessionService.addTimeOfSession(request)).getTimeOfSessionId();
+    public String addSession(@PathVariable Long movieId, @Valid @RequestBody AddTimeOfSessionRequest request) {
+        Long id = movieSessionService.addTimeOfSession(request);
         return "redirect:/api/movies/" + movieId;
     }
 

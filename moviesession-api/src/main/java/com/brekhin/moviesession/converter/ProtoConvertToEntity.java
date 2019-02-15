@@ -9,7 +9,6 @@ public class ProtoConvertToEntity {
 
     public static TimeOfSessionEntity convert(GSession gSession) {
         return new TimeOfSessionEntity()
-                .setTimeOfSessionId(gSession.getSessionId())
                 .setTimeOfSession(gSession.getTimeOfSession())
                 .setMovieId(gSession.getMovieId())
                 .setPrice(gSession.getPrice())

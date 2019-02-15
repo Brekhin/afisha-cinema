@@ -16,7 +16,7 @@ public class MovieSessionConverter {
     public static GRpcAddSessionRequest convert(AddTimeOfSessionRequest gTimeOfSession) {
         return GRpcAddSessionRequest.newBuilder()
                 .setSession(GSession.newBuilder()
-                        .setTimeOfSession(gTimeOfSession.getTimeOfSession())
+                        .setTimeOfSession(gTimeOfSession.getTimeOfSessionDate())
                         .setMovieId(gTimeOfSession.getMovieId())
                         .setPrice(gTimeOfSession.getPrice())
                         .setHallId(gTimeOfSession.getHallId())

@@ -2,8 +2,10 @@ package com.brekhin.movie.grpc.service.impl;
 
 import com.brekhin.movie.converter.ProtoConvertToEntity;
 import com.brekhin.movie.entity.MovieEntity;
-import com.brekhin.movie.grpc.GUuid;
-import com.brekhin.movie.grpc.model.*;
+import com.brekhin.movie.grpc.model.gRPCAddMovieRequest;
+import com.brekhin.movie.grpc.model.gRPCAddMovieResponse;
+import com.brekhin.movie.grpc.model.gRPCGetMovieRequest;
+import com.brekhin.movie.grpc.model.gRPCGetMovieResponse;
 import com.brekhin.movie.service.MovieService;
 import io.grpc.stub.StreamObserver;
 import org.junit.Test;
@@ -12,9 +14,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.sql.Timestamp;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

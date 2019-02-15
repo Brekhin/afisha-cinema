@@ -3,19 +3,14 @@ package com.brekhin.gateway.web.controller;
 import com.brekhin.gateway.service.MovieService;
 import com.brekhin.gateway.service.MovieSessionService;
 import com.brekhin.gateway.web.to.in.movie.AddMovieRequest;
-import com.brekhin.gateway.web.to.in.movie.DeleteMovieRequest;
-import com.brekhin.gateway.web.to.out.movie.AddMovie;
 import com.brekhin.gateway.web.to.out.movie.GetMovie;
 import com.brekhin.gateway.web.to.out.moviesession.InfoTimeOfSessionResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.http.MediaType;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -34,9 +29,9 @@ public class MovieController {
     }
 
     @PostMapping(path = "/newmovie", consumes = MediaType.ALL_VALUE)
-    public String addMovie(@Valid AddMovieRequest request) {
+    public ResponseEntity<Long> addMovie(@Valid @RequestBody AddMovieRequest request) {
         Long movieId = movieService.addMovie(request);
-        return "redirect:/gateway-api/api/movies/" + movieId;
+        return ResponseEntity.ok(movieId);
     }
 
     @GetMapping(path = "/newmovie")
@@ -45,12 +40,11 @@ public class MovieController {
     }
 
     @GetMapping(path = "/{movieId}")
-    public String getMovie(@PathVariable Long movieId, Model model){
+    public ResponseEntity<GetMovie> getMovie(@PathVariable Long movieId, Model model){
         List<InfoTimeOfSessionResponse> sessionsByMovieId = movieSessionService.getSessionsByMovieId(movieId);
         GetMovie movie = movieService.getMovie(movieId);
         movie.getSessions().addAll(sessionsByMovieId);
-        model.addAttribute("movie", movie);
-        return "movieInfo";
+        return ResponseEntity.ok(movie);
     }
 
 
@@ -60,14 +54,13 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(path = "/all")
-    public String getAllMovies(
+    @GetMapping
+    public ResponseEntity<List<GetMovie>> getAllMovies(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size,
-            Model model
+            @RequestParam(value = "size", defaultValue = "5") int size
     ) {
-        model.addAttribute("movies", movieService.getAllMovies(page, size));
-        return "allMovies";
+        List<GetMovie> allMovies = movieService.getAllMovies(page, size);
+        return ResponseEntity.ok(allMovies);
     }
 
 }

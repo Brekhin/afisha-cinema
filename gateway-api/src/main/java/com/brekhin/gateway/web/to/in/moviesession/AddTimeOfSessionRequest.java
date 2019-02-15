@@ -1,5 +1,6 @@
 package com.brekhin.gateway.web.to.in.moviesession;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,24 +9,25 @@ import java.sql.Timestamp;
 
 public class AddTimeOfSessionRequest {
 
-    private final String timeOfSession;
+    private final String timeOfSessionDate;
     private final Long movieId;
     private final int price;
     private final Long hallId;
 
+    @JsonCreator
     public AddTimeOfSessionRequest(
-            @JsonProperty("timeOfSession") String timeOfSession,
+            @JsonProperty("timeOfSessionDate") String timeOfSessionDate,
             @JsonProperty("movieId") Long movieId,
             @JsonProperty("price") int price,
             @JsonProperty("hallId") Long hallId) {
-        this.timeOfSession = timeOfSession;
+        this.timeOfSessionDate = timeOfSessionDate;
         this.movieId = movieId;
         this.price = price;
         this.hallId = hallId;
     }
 
-    public String getTimeOfSession() {
-        return timeOfSession;
+    public String getTimeOfSessionDate() {
+        return timeOfSessionDate;
     }
 
     public Long getMovieId() {
